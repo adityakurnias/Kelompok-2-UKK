@@ -1,0 +1,35 @@
+[90m= [39m[34;4mIlluminate\Database\Eloquent\Collection[39;24m {#896
+    [34mall[39m: [
+      [34;4mApp\Models\SellerRequest[39;24m {#6127
+        [34mid[39m: [35m1[39m,
+        [34muser_id[39m: [35m6[39m,
+        [34mshop_name[39m: "[32mToko Barang Bekas[39m",
+        [34mshop_description[39m: "[32mtoko barang antik sejak 1945[39m",
+        [34mshop_address[39m: "[32mcitatah dalam[39m",
+        [34mktp_image[39m: "[32mdummy-ktp.jpg[39m",
+        [34mwhatsapp_number[39m: "[32m123456789[39m",
+        [34mstatus[39m: "[32mpending[39m",
+        [34madmin_note[39m: [36mnull[39m,
+        [34mreviewed_by[39m: [36mnull[39m,
+        [34mreviewed_at[39m: [36mnull[39m,
+        [34mcreated_at[39m: "[32m2026-03-01 05:20:37[39m",
+        [34mupdated_at[39m: "[32m2026-03-01 05:20:37[39m",
+      },
+      [34;4mApp\Models\SellerRequest[39;24m {#6128
+        [34mid[39m: [35m2[39m,
+        [34muser_id[39m: [35m2[39m,
+        [34mshop_name[39m: "[32mtoko baju[39m",
+        [34mshop_description[39m: "[32msudah dari lama terbukan dan makan an asoao amosmaom[39m",
+        [34mshop_address[39m: "[32mbogor[39m",
+        [34mktp_image[39m: "[32mdummy-ktp.jpg[39m",
+        [34mwhatsapp_number[39m: "[32m08123456780[39m",
+        [34mstatus[39m: "[32mpending[39m",
+        [34madmin_note[39m: [36mnull[39m,
+        [34mreviewed_by[39m: [36mnull[39m,
+        [34mreviewed_at[39m: [36mnull[39m,
+        [34mcreated_at[39m: "[32m2026-03-01 05:40:49[39m",
+        [34mupdated_at[39m: "[32m2026-03-01 05:40:49[39m",
+      },
+    ],
+  }
+
