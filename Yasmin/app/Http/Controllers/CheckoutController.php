@@ -64,7 +64,7 @@ class CheckoutController extends Controller
             if ($request->payment_method == 'transfer_bank' && $request->hasFile('payment_proof')) {
                 $file = $request->file('payment_proof');
                 $paymentProof = time() . '.' . $file->extension();
-                $file->storeAs('public/payments', $paymentProof);
+                $file->storeAs('payments', $paymentProof, 'public');
             }
             
             // Buat order

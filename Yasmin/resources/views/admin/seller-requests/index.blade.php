@@ -762,10 +762,23 @@
                                     </div>
                                 </div>
 
-                                {{-- Keterangan KTP (TIDAK DITAMPILKAN LAGI) --}}
-                                <div class="alert alert-info">
-                                    <i class="bi bi-info-circle"></i> 
-                                    <strong>Catatan:</strong> Upload KTP tidak diperlukan untuk menjadi seller.
+                                {{-- Keterangan KTP --}}
+                                <div class="detail-section">
+                                    <div class="detail-section-title"><i class="bi bi-person-badge"></i> Foto KTP</div>
+                                    @if($req->ktp_image)
+                                        <div class="mt-2 text-center">
+                                            <a href="{{ asset('storage/ktp/' . $req->ktp_image) }}" target="_blank">
+                                                <img src="{{ asset('storage/ktp/' . $req->ktp_image) }}" alt="Foto KTP {{ $req->user->name }}" class="img-fluid rounded border" style="max-height: 250px; object-fit: contain;">
+                                            </a>
+                                            <div class="mt-2 text-muted" style="font-size: 0.8rem;">
+                                                <i class="bi bi-zoom-in"></i> Klik gambar untuk memperbesar
+                                            </div>
+                                        </div>
+                                    @else
+                                        <div class="alert alert-warning mb-0">
+                                            <i class="bi bi-exclamation-triangle"></i> Seller ini tidak mengunggah Foto KTP.
+                                        </div>
+                                    @endif
                                 </div>
 
                                 {{-- Admin Note (if exists) --}}

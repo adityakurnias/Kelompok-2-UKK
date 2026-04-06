@@ -213,7 +213,7 @@ class SellerController extends Controller
 
         $existingRequest = SellerRequest::where('user_id', $user->id)->first();
 
-        if ($existingRequest) {
+        if ($existingRequest && $existingRequest->status !== 'rejected') {
             return redirect()->route('seller.request-status')
                 ->with('info', 'Anda sudah mengajukan permohonan seller. Status: ' . $existingRequest->status);
         }
@@ -228,17 +228,29 @@ class SellerController extends Controller
             'shop_description' => 'required|string|min:20',
             'shop_address' => 'required|string',
             'whatsapp_number' => 'required|string|max:20',
+            'ktp_image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        SellerRequest::create([
-            'user_id' => Auth::id(),
-            'shop_name' => $request->shop_name,
-            'shop_description' => $request->shop_description,
-            'shop_address' => $request->shop_address,
-            'whatsapp_number' => $request->whatsapp_number,
-            'ktp_image' => null,
-            'status' => 'pending',
-        ]);
+        $ktpPath = null;
+        if ($request->hasFile('ktp_image')) {
+            $ktpPath = time() . '_' . uniqid() . '.' . $request->file('ktp_image')->extension();
+            $request->file('ktp_image')->storeAs('ktp', $ktpPath, 'public');
+        }
+
+        SellerRequest::updateOrCreate(
+            ['user_id' => Auth::id()],
+            [
+                'shop_name' => $request->shop_name,
+                'shop_description' => $request->shop_description,
+                'shop_address' => $request->shop_address,
+                'whatsapp_number' => $request->whatsapp_number,
+                'ktp_image' => $ktpPath,
+                'status' => 'pending',
+                'admin_note' => null,
+                'reviewed_by' => null,
+                'reviewed_at' => null,
+            ]
+        );
 
         return redirect()->route('seller.request-status')
             ->with('success', 'Permohonan seller berhasil dikirim! Admin akan memverifikasi dalam 1x24 jam.');
