@@ -3,82 +3,104 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Authentikasi - Feroz Net Store</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Autentikasi - Fariz Net</title>
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700,800,900&display=swap" rel="stylesheet" />
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body { 
-            /* Background Abu Industrial Gelap */
-            background: #1f2937; 
-            background-image: radial-gradient(#374151 1px, transparent 1px);
-            background-size: 20px 20px;
+            background-color: #0f172a;
+            background-image: radial-gradient(rgba(14,165,233,0.07) 1px, transparent 1px);
+            background-size: 28px 28px;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Instrument Sans', sans-serif;
+            color: #f8fafc;
         }
         
-        .auth-card {
-            background: #ffffff;
-            /* Border Tebal & Kaku khas Industrial */
-            border: 4px solid #000000;
-            border-radius: 0px; /* Siku kotak lebih industrial */
-            box-shadow: 12px 12px 0px 0px rgba(0,0,0,1); /* Hard Shadow */
+        .auth-wrapper {
             width: 100%;
-            max-width: 420px;
-            padding: 40px;
+            max-width: 440px;
+            padding: 2rem;
         }
 
-        .btn-custom { 
-            background: #111827; /* Hitam Pekat */
-            color: white !important; 
-            border: none; 
-            border-radius: 0px;
-            font-weight: 900; 
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            padding: 12px;
-            transition: all 0.2s;
-            border-bottom: 4px solid #4b5563;
-        }
-
-        .btn-custom:hover { 
-            background: #000000;
-            transform: translate(-2px, -2px);
-            box-shadow: 4px 4px 0px 0px #4b5563;
-        }
-
-        /* Styling Input agar selaras */
-        input.form-control {
-            border: 2px solid #111827;
-            border-radius: 0px;
-            font-weight: 600;
-        }
-
-        input.form-control:focus {
-            box-shadow: none;
-            border-color: #6b7280;
+        .auth-card {
+            background: #1e293b;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 2rem;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+            padding: 2.5rem;
         }
 
         .brand-text {
-            font-size: 1.5rem;
+            font-size: 1.75rem;
+            font-weight: 900;
+            font-style: italic;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            color: #0ea5e9;
+            text-decoration: none;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.65rem;
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: -1px;
-            font-style: italic;
+            letter-spacing: 0.15em;
+            color: #64748b;
+            margin-bottom: 0.5rem;
         }
+
+        .form-input {
+            width: 100%;
+            background: #0f172a;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 0.875rem;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.875rem 1rem;
+            outline: none;
+            transition: all 0.2s;
+            font-family: 'Instrument Sans', sans-serif;
+        }
+        .form-input:focus { border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14,165,233,0.15); }
+        .form-input::placeholder { color: #475569; }
+
+        .btn-primary {
+            width: 100%;
+            background: #0ea5e9;
+            color: white;
+            font-weight: 900;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 1rem;
+            border-radius: 0.875rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Instrument Sans', sans-serif;
+        }
+        .btn-primary:hover { background: #38bdf8; transform: scale(1.02); box-shadow: 0 0 25px rgba(14,165,233,0.3); }
+
+        .link-sky { color: #0ea5e9; font-weight: 700; text-decoration: none; }
+        .link-sky:hover { color: #38bdf8; }
+        
+        .divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin: 1.5rem 0; }
     </style>
 </head>
 <body>
-    <div class="auth-card">
-        <div class="text-center mb-5">
-            <a href="/" class="text-decoration-none brand-text text-dark underline decoration-4 decoration-gray-400">
-                FEROZ NET STORE
-            </a>
-            <div class="text-[10px] font-bold text-gray-400 mt-1 tracking-[.3em]"></div>
+    <div class="auth-wrapper">
+        <div class="text-center mb-8">
+            <a href="/" class="brand-text">FARIZ NET</a>
+            <p style="font-size:0.65rem; font-weight:700; text-transform:uppercase; letter-spacing:0.2em; color:#475569; margin-top:0.5rem;">Network Device Store</p>
         </div>
         
-        <div class="auth-content">
+        <div class="auth-card">
             {{ $slot }}
         </div>
     </div>

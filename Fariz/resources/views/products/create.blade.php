@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tambah Perangkat Baru - Feroz Net Store</title>
+    <title>Tambah Perangkat Baru - Fariz Net Store</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body { 
@@ -102,7 +102,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="/">FEROZ NET STORE</a>
+            <a class="navbar-brand" href="/">FARIZ NET STORE</a>
             <div class="ms-auto d-flex align-items-center">
                 <a href="{{ route('admin.products.index') }}" class="btn-back me-4">← Kembali</a>
                 <form method="POST" action="{{ route('logout') }}">@csrf

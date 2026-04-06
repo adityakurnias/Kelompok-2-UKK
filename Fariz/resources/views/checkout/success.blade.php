@@ -27,7 +27,7 @@
                         <ul class="text-sm text-indigo-800 space-y-3 list-none">
                             <li class="flex items-start gap-2">
                                 <span class="text-indigo-500 font-bold">•</span>
-                                <span>Transfer ke rekening <strong>Bank BCA 123-456-7890</strong> a/n <strong>Feroz MD</strong>.</span>
+                                <span>Transfer ke rekening <strong>Bank BCA 123-456-7890</strong> a/n <strong>Fariz MD</strong>.</span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <span class="text-indigo-500 font-bold">•</span>

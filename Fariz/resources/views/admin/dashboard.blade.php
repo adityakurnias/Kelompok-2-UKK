@@ -59,9 +59,9 @@
             <div class="premium-card p-6 mb-8">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     <div class="flex items-center gap-4">
-                        <div class="h-14 w-14 rounded-full overflow-hidden border-2 border-sky-500/50 shadow-lg">
+                        <!-- <div class="h-14 w-14 rounded-full overflow-hidden border-2 border-sky-500/50 shadow-lg">
                             <img src="{{ asset('images/admin-foto.jpg') }}" alt="Admin Profile" class="h-full w-full object-cover">
-                        </div>
+                        </div> -->
                         <div>
                             <h1 class="text-2xl font-black text-white uppercase tracking-tight">Selamat Datang, <span class="accent-sky">{{ Auth::user()->name }}</span></h1>
                             <p class="text-slate-400 text-sm font-bold uppercase tracking-widest">Network Administrator Panel</p>

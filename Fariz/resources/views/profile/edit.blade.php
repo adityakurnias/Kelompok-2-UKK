@@ -1,30 +1,30 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-black text-xl text-gray-800 leading-tight uppercase tracking-tighter italic">
-            {{ __('PROFIL MENU') }}
+        <h2 class="font-black text-xl text-white leading-tight uppercase tracking-tighter">
+            👤 {{ __('Profil Saya') }}
         </h2>
     </x-slot>
 
-    <div class="py-12 bg-[#1a1c23] min-h-screen">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
+    <div class="py-10 min-h-screen" style="background-color: #0f172a;">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             
-            <div class="p-6 sm:p-10 bg-white border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] rounded-none">
+            <div class="p-8 rounded-3xl" style="background:#1e293b; border: 1px solid rgba(255,255,255,0.05);">
                 <div class="max-w-xl">
-                    <h3 class="text-lg font-black uppercase mb-4 border-b-2 border-black inline-block">INFORMASI PUBLIK</h3>
+                    <h3 class="text-sm font-black uppercase tracking-widest text-slate-400 mb-6 pb-4" style="border-bottom: 1px solid rgba(255,255,255,0.07);">Informasi Publik</h3>
                     @include('profile.partials.update-profile-information-form')
                 </div>
             </div>
 
-            <div class="p-6 sm:p-10 bg-white border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] rounded-none">
+            <div class="p-8 rounded-3xl" style="background:#1e293b; border: 1px solid rgba(255,255,255,0.05);">
                 <div class="max-w-xl">
-                    <h3 class="text-lg font-black uppercase mb-4 border-b-2 border-black inline-block">UPDATE DATA</h3>
+                    <h3 class="text-sm font-black uppercase tracking-widest text-slate-400 mb-6 pb-4" style="border-bottom: 1px solid rgba(255,255,255,0.07);">Update Password</h3>
                     @include('profile.partials.update-password-form')
                 </div>
             </div>
 
-            <div class="p-6 sm:p-10 bg-white border-4 border-red-600 shadow-[10px_10px_0px_0px_rgba(220,38,38,1)] rounded-none">
+            <div class="p-8 rounded-3xl" style="background:rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.2);">
                 <div class="max-w-xl">
-                    <h3 class="text-lg font-black uppercase mb-4 text-red-600 border-b-2 border-red-600 inline-block">PERINGATAN</h3>
+                    <h3 class="text-sm font-black uppercase tracking-widest text-red-400 mb-6 pb-4" style="border-bottom: 1px solid rgba(239,68,68,0.2);">⚠️ Hapus Akun</h3>
                     @include('profile.partials.delete-user-form')
                 </div>
             </div>
@@ -34,16 +34,30 @@
 
     <style>
         input[type="text"], input[type="email"], input[type="password"] {
-            border: 2px solid #000 !important;
-            border-radius: 0px !important;
-            font-weight: 700 !important;
+            background: #0f172a !important;
+            border: 1px solid rgba(255,255,255,0.1) !important;
+            border-radius: 0.75rem !important;
+            color: white !important;
+            font-weight: 600 !important;
+        }
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus {
+            border-color: #0ea5e9 !important;
+            box-shadow: 0 0 0 3px rgba(14,165,233,0.15) !important;
+        }
+        label {
+            color: #94a3b8 !important;
+            font-size: 0.7rem !important;
+            font-weight: 900 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.1em !important;
         }
         button[type="submit"] {
-            background-color: #000 !important;
-            border-radius: 0px !important;
+            background-color: #0ea5e9 !important;
+            border-radius: 0.75rem !important;
             font-weight: 900 !important;
             text-transform: uppercase !important;
             letter-spacing: 1px !important;
+            color: white !important;
         }
     </style>
 </x-app-layout>
