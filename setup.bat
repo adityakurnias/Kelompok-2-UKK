@@ -19,7 +19,8 @@ for /d %%D in ("%ROOT%*") do (
         if exist "%%D\composer.json" (
             pushd "%%D"
             echo     Running composer setup...
-            composer run setup && composer update
+            composer update
+            composer run setup 
             if !ERRORLEVEL! NEQ 0 (
                 echo     [FAILED] composer setup failed for !PROJECT!
             ) else (
