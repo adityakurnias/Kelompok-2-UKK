@@ -154,9 +154,12 @@
     
     .recent-order-item:hover {
         border-color: var(--navy);
+        background: #fbfbfb;
+        transform: translateX(4px);
     }
     
     .order-number {
+        font-family: 'DM Sans', sans-serif;
         font-weight: 700;
         color: var(--navy);
     }
@@ -479,20 +482,20 @@
                 @foreach($recommendedProducts as $product)
                 <div class="col-lg-3 col-md-4 col-6">
                     <div class="card-product">
-                        <div class="position-relative">
+                        <div class="position-relative overflow-hidden">
                             <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
                             <span class="badge-condition">
-                                {{ $product->condition == 'baru' ? 'Baru' : ($product->condition == 'seperti_baru' ? 'Seperti Baru' : 'Bekas') }}
+                                {{ $product->condition == 'baru' ? 'Baru' : ($product->condition == 'seperti_baru' ? 'Spt Baru' : 'Bekas') }}
                             </span>
                         </div>
                         <div class="card-body">
-                            <p class="card-title">{{ Str::limit($product->name, 30) }}</p>
+                            <p class="card-title">{{ Str::limit($product->name, 40) }}</p>
                             <p class="price">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">
+                            <div class="seller-info">
+                                <span class="seller-name text-truncate">
                                     <i class="bi bi-person-circle"></i> {{ $product->user->name }}
-                                </small>
-                                <a href="{{ route('products.show', $product) }}" class="btn-navy btn-sm">Detail</a>
+                                </span>
+                                <a href="{{ route('products.show', $product) }}" class="btn-navy btn-sm" style="padding: 0.25rem 0.65rem; font-size: 0.75rem;">Detail</a>
                             </div>
                         </div>
                     </div>

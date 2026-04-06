@@ -280,6 +280,24 @@
     }
 
     .btn-back:hover { border-color: var(--navy); color: var(--navy); background: var(--soft); }
+
+    /* ── MOBILE PRODUCT LIST ── */
+    .order-prod-mobile { display: none; }
+    .order-prod-card {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border);
+    }
+    .order-prod-card:last-child { border-bottom: none; }
+    .order-prod-info { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .order-prod-details { display: flex; justify-content: space-between; font-size: 0.85rem; }
+    .order-prod-label { color: var(--muted); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; }
+
+    @media (max-width: 767px) {
+        .products-table-wrap table { display: none; }
+        .order-prod-mobile { display: block; }
+        .order-header { padding: 1.25rem; text-align: center; justify-content: center; }
+        .order-header-left h2 { font-size: 1.2rem; }
+    }
 </style>
 @endpush
 
@@ -380,6 +398,42 @@
                     </tr>
                 </tfoot>
             </table>
+
+            {{-- Mobile Product List --}}
+            <div class="order-prod-mobile">
+                @foreach($order->items as $item)
+                    <div class="order-prod-card">
+                        <div class="order-prod-info">
+                            <img src="{{ asset('storage/products/' . $item->product->image) }}"
+                                 class="product-thumb" alt="{{ $item->product->name }}">
+                            <div style="flex:1">
+                                <div class="product-cell-name">{{ $item->product->name }}</div>
+                                <div class="product-cell-cat">{{ $item->seller->name }}</div>
+                            </div>
+                        </div>
+                        <div class="order-prod-details mb-2">
+                             <div class="d-flex flex-column">
+                                <span class="order-prod-label">Harga</span>
+                                <span>Rp {{ number_format($item->price, 0, ',', '.') }}</span>
+                             </div>
+                             <div class="d-flex flex-column text-center">
+                                <span class="order-prod-label">Qty</span>
+                                <span>{{ $item->quantity }}</span>
+                             </div>
+                             <div class="d-flex flex-column text-end">
+                                <span class="order-prod-label">Subtotal</span>
+                                <span class="fw-bold">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</span>
+                             </div>
+                        </div>
+                    </div>
+                @endforeach
+                <div class="p-3 bg-soft d-flex justify-content-between align-items-center">
+                    <span class="order-prod-label">Total Pembayaran</span>
+                    <span class="fw-bold text-navy" style="font-family:'Playfair Display',serif;font-size:1.1rem">
+                        Rp {{ number_format($order->total_price, 0, ',', '.') }}
+                    </span>
+                </div>
+            </div>
         </div>
 
         {{-- Shipping Info --}}

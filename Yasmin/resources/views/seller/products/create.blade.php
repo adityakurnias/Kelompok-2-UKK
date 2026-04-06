@@ -66,12 +66,12 @@
                             @error('image')<div class="invalid-feedback">{{ $message }}</div>@enderror
                         </div>
                         
-                        <div class="d-flex justify-content-between">
-                            <a href="{{ route('seller.products') }}" class="btn btn-secondary">
+                        <div class="d-flex flex-column flex-sm-row justify-content-between gap-3">
+                            <a href="{{ route('seller.products') }}" class="btn btn-outline-secondary px-4">
                                 <i class="bi bi-arrow-left"></i> Kembali
                             </a>
-                            <button type="submit" class="btn btn-navy">
-                                <i class="bi bi-save"></i> Simpan Produk
+                            <button type="submit" class="btn btn-navy px-4 py-2">
+                                <i class="bi bi-plus-circle"></i> Tambah Produk
                             </button>
                         </div>
                     </form>

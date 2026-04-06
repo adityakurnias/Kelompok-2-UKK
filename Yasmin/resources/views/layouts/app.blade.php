@@ -35,8 +35,11 @@
         .navbar {
             background: var(--navy) !important;
             padding: 0;
-            border-bottom: 3px solid var(--accent);
-            box-shadow: none;
+            border-bottom: 3.5px solid var(--accent);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1040;
         }
 
         .navbar-inner {
@@ -50,98 +53,130 @@
         .navbar-brand {
             font-family: 'Playfair Display', serif;
             font-weight: 700;
-            font-size: 1.35rem;
+            font-size: 1.45rem;
             color: var(--white) !important;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.6px;
             white-space: nowrap;
             text-decoration: none;
         }
 
-        .navbar-brand span {
-            color: var(--accent);
-        }
+        .navbar-brand span { color: var(--accent); }
 
         .search-wrap {
             flex: 1;
-            max-width: 480px;
+            max-width: 520px;
             margin: 0 auto;
         }
 
         .search-wrap .input-group {
-            border-radius: 8px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
             overflow: hidden;
+            transition: all 0.2s;
+        }
+
+        .search-wrap .input-group:focus-within {
+            background: rgba(255,255,255,0.12);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(232,197,71,0.15);
         }
 
         .search-wrap .form-control {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-right: none;
+            background: transparent;
+            border: none;
             color: white;
-            font-size: 0.875rem;
-            padding: 0.6rem 1rem;
+            font-size: 0.88rem;
+            padding: 0.65rem 1rem;
         }
 
-        .search-wrap .form-control::placeholder { color: rgba(255,255,255,0.5); }
-        .search-wrap .form-control:focus {
-            background: rgba(255,255,255,0.15);
-            border-color: var(--accent);
-            box-shadow: none;
-            color: white;
-        }
+        .search-wrap .form-control::placeholder { color: rgba(255,255,255,0.4); }
+        .search-wrap .form-control:focus { box-shadow: none; color: white; }
 
         .search-wrap .btn {
-            background: var(--accent);
+            background: transparent;
             border: none;
-            color: var(--navy);
+            color: rgba(255,255,255,0.6);
             padding: 0.6rem 1rem;
-            font-size: 0.875rem;
+            transition: all 0.2s;
         }
+        .search-wrap .btn:hover { color: var(--accent); }
 
         .nav-actions {
             display: flex;
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.5rem;
             margin-left: auto;
         }
 
         .nav-link-item {
-            color: rgba(255,255,255,0.8) !important;
-            font-size: 0.875rem;
+            color: rgba(255,255,255,0.85) !important;
+            font-size: 0.9rem;
             font-weight: 500;
-            padding: 0.5rem 0.75rem !important;
-            border-radius: 6px;
+            padding: 0.55rem 0.85rem !important;
+            border-radius: 8px;
             transition: all 0.2s;
             display: flex;
             align-items: center;
-            gap: 0.35rem;
+            gap: 0.4rem;
             text-decoration: none;
         }
 
         .nav-link-item:hover {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.08);
             color: white !important;
         }
-
-        .nav-link-item.active { color: var(--accent) !important; }
 
         .btn-nav-accent {
             background: var(--accent);
             color: var(--navy) !important;
-            font-weight: 600;
-            border-radius: 6px;
-            padding: 0.45rem 1rem !important;
-            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 8px;
+            padding: 0.55rem 1.25rem !important;
+            font-size: 0.88rem;
+            box-shadow: 0 4px 10px rgba(232,197,71,0.2);
         }
 
         .btn-nav-accent:hover {
-            background: #d4b03a;
+            background: #f5d45a;
             color: var(--navy) !important;
+            transform: translateY(-1.5px);
         }
 
-        .cart-badge {
-            position: relative;
+        /* ── MOBILE NAV BAR ── */
+        .mobile-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: none;
+            justify-content: space-around;
+            padding: 0.65rem 0;
+            box-shadow: 0 -4px 16px rgba(0,0,0,0.08);
+            z-index: 1030;
+            border-top: 1px solid var(--border);
+            border-radius: 18px 18px 0 0;
         }
 
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 0.68rem;
+            font-weight: 600;
+            gap: 0.2rem;
+            transition: color 0.2s;
+            flex: 1;
+        }
+
+        .mobile-nav-item i { font-size: 1.25rem; }
+        .mobile-nav-item.active { color: var(--navy); }
+        .mobile-nav-item.active i { color: var(--navy); }
+
+        .cart-badge { position: relative; }
         .cart-badge .badge {
             position: absolute;
             top: -4px;
@@ -149,228 +184,68 @@
             background: #e53e3e;
             font-size: 0.6rem;
             padding: 2px 5px;
+            border: 2px solid white;
         }
 
-        /* Dropdown */
-        .dropdown-menu {
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.12);
-            padding: 0.5rem;
-            min-width: 200px;
+        /* ── OFFCANVAS ── */
+        .offcanvas {
+            border-radius: 20px 0 0 20px;
+            border-left: none;
         }
+        .offcanvas-header { border-bottom: 1px solid var(--border); padding: 1.5rem; }
+        .offcanvas-title { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--navy); }
+        .offcanvas-body { padding: 1.5rem; }
 
-        .dropdown-item {
-            border-radius: 6px;
-            font-size: 0.875rem;
-            padding: 0.5rem 0.75rem;
+        .offcanvas-menu-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.9rem;
+            padding: 0.85rem 1rem;
+            border-radius: 10px;
             color: var(--ink);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.4rem;
+            transition: background 0.2s;
         }
-
-        .dropdown-item:hover { background: var(--soft); }
-        .dropdown-item.text-danger:hover { background: #fff5f5; }
+        .offcanvas-menu-item:hover { background: var(--soft); color: var(--navy); }
+        .offcanvas-menu-item i { font-size: 1.2rem; color: var(--muted); }
+        .offcanvas-menu-item.logout { color: #e53e3e; }
+        .offcanvas-menu-item.logout i { color: #e53e3e; }
 
         /* ── FOOTER ── */
         footer {
             background: var(--navy);
             color: rgba(255,255,255,0.7);
-            padding: 3.5rem 0 1.5rem;
-            margin-top: 5rem;
+            padding: 4.5rem 0 2rem;
+            margin-top: 6rem;
         }
 
         footer .brand {
             font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: white;
             font-weight: 700;
-            margin-bottom: 0.75rem;
+            margin-bottom: 1rem;
             display: block;
         }
-
         footer .brand span { color: var(--accent); }
 
-        footer p { font-size: 0.875rem; line-height: 1.7; }
-
-        footer h6 {
-            color: white;
-            font-weight: 600;
-            font-size: 0.8rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-
-        footer ul { list-style: none; padding: 0; margin: 0; }
-
-        footer ul li { margin-bottom: 0.5rem; }
-
-        footer ul li a {
-            color: rgba(255,255,255,0.6);
-            text-decoration: none;
-            font-size: 0.875rem;
-            transition: color 0.2s;
-        }
-
-        footer ul li a:hover { color: var(--accent); }
-
-        .footer-socials a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 34px;
-            height: 34px;
-            border-radius: 8px;
-            background: rgba(255,255,255,0.08);
-            color: rgba(255,255,255,0.7);
-            font-size: 0.95rem;
-            text-decoration: none;
-            transition: all 0.2s;
-            margin-right: 0.4rem;
-        }
-
-        .footer-socials a:hover {
-            background: var(--accent);
-            color: var(--navy);
-        }
-
-        footer .divider {
-            border-color: rgba(255,255,255,0.1);
-            margin: 2rem 0 1rem;
-        }
-
-        footer .copyright {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.4);
-        }
-
-        /* ── GLOBAL CARD ── */
-        .card-product {
-            background: white;
-            border-radius: 14px;
-            overflow: hidden;
-            border: 1px solid var(--border);
-            transition: transform 0.25s, box-shadow 0.25s;
-            cursor: pointer;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-product:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(15,36,68,0.12);
-        }
-
-        .card-product img {
-            height: 200px;
-            width: 100%;
-            object-fit: cover;
-        }
-
-        .card-product .card-body { 
-            padding: 1rem 1.1rem 1.1rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-product .card-title {
-            font-size: 0.88rem;
-            font-weight: 600;
-            color: var(--ink);
-            margin-bottom: 0.3rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            line-height: 1.4;
-        }
-
-        .card-product .price {
-            color: var(--navy);
-            font-weight: 700;
-            font-size: 1.05rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .badge-condition {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(15,36,68,0.85);
-            color: white;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.72rem;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-            backdrop-filter: blur(4px);
-        }
-
-        .btn-navy {
-            background: var(--navy);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 0.82rem;
-            font-weight: 500;
-            padding: 0.45rem 1rem;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            text-decoration: none;
-        }
-
-        .btn-navy:hover {
-            background: var(--navy-mid);
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        .btn-outline-navy {
-            background: transparent;
-            color: var(--navy);
-            border: 1.5px solid var(--navy);
-            border-radius: 8px;
-            font-size: 0.82rem;
-            font-weight: 500;
-            padding: 0.45rem 1rem;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            text-decoration: none;
-        }
-
-        .btn-outline-navy:hover {
-            background: var(--navy);
-            color: white;
-        }
-
-        /* Toasts / alerts */
-        .alert {
-            border: none;
-            border-radius: 10px;
-            font-size: 0.9rem;
-        }
-        .alert-success {
-            background: #f0fff4;
-            border: 1.5px solid #c6f6d5;
-            color: #276749;
-        }
-        .alert-danger {
-            background: #fff5f5;
-            border: 1.5px solid #fed7d7;
-            color: #c53030;
+        /* ── MEDIA QUERIES ── */
+        @media (max-width: 991px) {
+            .navbar-inner { gap: 1rem; }
+            .navbar-brand { font-size: 1.25rem; }
         }
 
         @media (max-width: 768px) {
-            .search-wrap { max-width: 100%; }
-            .navbar-inner { flex-wrap: wrap; gap: 0.75rem; }
+            body { padding-bottom: 70px; } /* Space for bottom nav */
+            .mobile-bottom-nav { display: flex; }
+            .nav-actions .nav-link-item:not(.btn-nav-accent) { display: none; }
+            .search-wrap { display: none; }
+            .page-header h1 { font-size: 1.6rem; }
+            footer { padding: 3rem 0 6rem; text-align: center; } /* More bottom padding for nav */
+            .footer-socials { justify-content: center; margin-bottom: 2rem; }
         }
 
         /* Page header */
@@ -390,6 +265,121 @@
             color: var(--muted);
             font-size: 0.95rem;
             margin: 0;
+        }
+
+        /* ── GLOBAL COMPONENTS ── */
+        .btn-navy {
+            background: var(--navy);
+            color: white !important;
+            border-radius: 8px;
+            padding: 0.6rem 1.25rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-navy:hover {
+            background: var(--navy-mid);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(15,36,68,0.15);
+        }
+
+        /* ── PRODUCT CARD ── */
+        .card-product {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-product:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(15,36,68,0.12);
+            border-color: var(--navy);
+        }
+
+        .card-product img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card-product:hover img {
+            transform: scale(1.08);
+        }
+
+        .card-product .card-body {
+            padding: 1.25rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-product .card-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            min-height: 2.8em;
+        }
+
+        .card-product .price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.75rem;
+        }
+
+        .badge-condition {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(4px);
+            color: var(--navy);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 2;
+            border: 1px solid rgba(15,36,68,0.1);
+        }
+
+        .seller-info {
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid var(--soft);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .seller-name {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
         }
     </style>
     @stack('styles')
@@ -414,91 +404,26 @@
 
             <div class="nav-actions">
                 @auth
-                    @if(Auth::user()->role == 'buyer')
-                        @php 
-                            $cartCount = App\Models\Cart::where('user_id', Auth::id())->count(); 
-                        @endphp
-                        <a href="{{ route('cart.index') }}" class="nav-link-item cart-badge">
-                            <i class="bi bi-bag"></i>
-                            @if($cartCount > 0)
-                                <span class="badge rounded-pill">{{ $cartCount }}</span>
-                            @endif
-                        </a>
-                    @endif
+                    @php 
+                        $cartCount = App\Models\Cart::where('user_id', Auth::id())->count(); 
+                    @endphp
+                    <a href="{{ route('cart.index') }}" class="nav-link-item cart-badge d-none d-lg-flex">
+                        <i class="bi bi-bag"></i>
+                        @if($cartCount > 0)
+                            <span class="badge rounded-pill">{{ $cartCount }}</span>
+                        @endif
+                    </a>
 
-                    <div class="dropdown">
-                        <a class="nav-link-item" href="#" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i>
-                            <span class="d-none d-lg-inline">{{ Auth::user()->name }}</span>
-                            <i class="bi bi-chevron-down" style="font-size:0.65rem"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end">
-                            {{-- Dashboard berdasarkan role --}}
-                            @if(Auth::user()->role == 'buyer')
-                                <li><a class="dropdown-item" href="{{ route('buyer.dashboard') }}">
-                                    <i class="bi bi-speedometer2"></i> Dashboard
-                                </a></li>
-                            @endif
-                            @if(Auth::user()->role == 'seller')
-                                <li><a class="dropdown-item" href="{{ route('seller.dashboard') }}">
-                                    <i class="bi bi-speedometer2"></i> Dashboard
-                                </a></li>
-                            @endif
-                            @if(Auth::user()->role == 'admin')
-                                <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">
-                                    <i class="bi bi-shield-check"></i> Admin Panel
-                                </a></li>
-                            @endif
-
-                            <li><hr class="dropdown-divider mx-2"></li>
-                            
-                            {{-- Menu Profil --}}
-                            <li><a class="dropdown-item" href="{{ route('profile') }}">
-                                <i class="bi bi-person"></i> Profil Saya
-                            </a></li>
-                            
-                            {{-- Menu Buyer --}}
-                            @if(Auth::user()->role == 'buyer')
-                                <li><a class="dropdown-item" href="{{ route('orders.index') }}">
-                                    <i class="bi bi-box"></i> Pesanan Saya
-                                </a></li>
-                                <li><a class="dropdown-item" href="{{ route('cart.index') }}">
-                                    <i class="bi bi-cart"></i> Keranjang
-                                </a></li>
-                                <li><a class="dropdown-item" href="{{ route('seller.request') }}">
-                                    <i class="bi bi-shop"></i> Jadi Seller
-                                </a></li>
-                            @endif
-                            
-                            {{-- Menu Seller --}}
-                            @if(Auth::user()->role == 'seller')
-                                <li><a class="dropdown-item" href="{{ route('seller.products') }}">
-                                    <i class="bi bi-box-seam"></i> Produk Saya
-                                </a></li>
-                                <li><a class="dropdown-item" href="{{ route('seller.orders') }}">
-                                    <i class="bi bi-cart-check"></i> Pesanan Masuk
-                                </a></li>
-                            @endif
-                            
-                            <li><hr class="dropdown-divider mx-2"></li>
-                            
-                            {{-- Logout --}}
-                            <li>
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item text-danger">
-                                        <i class="bi bi-box-arrow-right"></i> Keluar
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
+                    <a class="nav-link-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#userMenu">
+                        <i class="bi bi-person-circle"></i>
+                        <span class="d-none d-lg-inline">{{ Auth::user()->name }}</span>
+                        <i class="bi bi-chevron-down d-none d-lg-inline" style="font-size:0.65rem"></i>
+                    </a>
                 @else
                     <a href="{{ route('login') }}" class="nav-link-item">Masuk</a>
                     <a href="{{ route('register') }}" class="nav-link-item btn-nav-accent">Daftar</a>
                 @endauth
             </div>
-        </div>
 
         {{-- Mobile search --}}
         <div class="w-100 pb-2 d-md-none">
@@ -576,6 +501,108 @@
         <p class="copyright text-center mb-0">&copy; {{ date('Y') }} Preloved Market. All rights reserved.</p>
     </div>
 </footer>
+
+{{-- ── OFFCANVAS MENU ── --}}
+@auth
+<div class="offcanvas offcanvas-end" tabindex="-1" id="userMenu">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu Utama</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="d-flex align-items-center gap-3 mb-4 pb-3 border-bottom">
+            <div class="bg-navy p-3 rounded-circle text-white d-flex align-items-center justify-center" style="width:50px;height:50px">
+                <i class="bi bi-person" style="font-size:1.5rem"></i>
+            </div>
+            <div>
+                <div class="fw-bold fs-5">{{ Auth::user()->name }}</div>
+                <div class="text-muted small text-capitalize">{{ Auth::user()->role }}</div>
+            </div>
+        </div>
+
+        <a class="offcanvas-menu-item" href="{{ route('home') }}">
+            <i class="bi bi-house"></i> Beranda
+        </a>
+        
+        @if(Auth::user()->role == 'buyer')
+            <a class="offcanvas-menu-item" href="{{ route('buyer.dashboard') }}">
+                <i class="bi bi-speedometer2"></i> Dashboard Buyer
+            </a>
+            <a class="offcanvas-menu-item" href="{{ route('orders.index') }}">
+                <i class="bi bi-box"></i> Pesanan Saya
+            </a>
+            <a class="offcanvas-menu-item" href="{{ route('cart.index') }}">
+                <i class="bi bi-cart"></i> Keranjang Belanja
+            </a>
+            <hr class="my-3">
+            <a class="offcanvas-menu-item" href="{{ route('seller.request') }}">
+                <i class="bi bi-shop"></i> Jadi Seller
+            </a>
+        @endif
+
+        @if(Auth::user()->role == 'seller')
+            <a class="offcanvas-menu-item" href="{{ route('seller.dashboard') }}">
+                <i class="bi bi-speedometer2"></i> Dashboard Seller
+            </a>
+            <a class="offcanvas-menu-item" href="{{ route('seller.products') }}">
+                <i class="bi bi-box-seam"></i> Produk Saya
+            </a>
+            <a class="offcanvas-menu-item" href="{{ route('seller.orders') }}">
+                <i class="bi bi-cart-check"></i> Pesanan Masuk
+            </a>
+        @endif
+
+        @if(Auth::user()->role == 'admin')
+            <a class="offcanvas-menu-item" href="{{ route('admin.dashboard') }}">
+                <i class="bi bi-shield-check"></i> Admin Panel
+            </a>
+        @endif
+
+        <hr class="my-3">
+        <a class="offcanvas-menu-item" href="{{ route('profile') }}">
+            <i class="bi bi-person-gear"></i> Pengaturan Profil
+        </a>
+
+        <form action="{{ route('logout') }}" method="POST" class="mt-4">
+            @csrf
+            <button type="submit" class="offcanvas-menu-item logout border-0 w-100 bg-transparent text-start">
+                <i class="bi bi-box-arrow-right"></i> Keluar Sesi
+            </button>
+        </form>
+    </div>
+</div>
+@endauth
+
+{{-- ── MOBILE BOTTOM NAV ── --}}
+<div class="mobile-bottom-nav">
+    <a href="{{ route('home') }}" class="mobile-nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
+        <i class="bi bi-house-door{{ request()->routeIs('home') ? '-fill' : '' }}"></i>
+        <span>Beranda</span>
+    </a>
+    <a href="{{ route('products.index') }}" class="mobile-nav-item {{ request()->routeIs('products.*') ? 'active' : '' }}">
+        <i class="bi bi-grid{{ request()->routeIs('products.*') ? '-fill' : '' }}"></i>
+        <span>Explore</span>
+    </a>
+    @auth
+        @php $cartCount = App\Models\Cart::where('user_id', Auth::id())->count(); @endphp
+        <a href="{{ route('cart.index') }}" class="mobile-nav-item cart-badge {{ request()->routeIs('cart.*') ? 'active' : '' }}">
+            <i class="bi bi-bag{{ request()->routeIs('cart.*') ? '-fill' : '' }}"></i>
+            @if($cartCount > 0)
+                <span class="badge rounded-pill">{{ $cartCount }}</span>
+            @endif
+            <span>Keranjang</span>
+        </a>
+        <a href="#" class="mobile-nav-item" data-bs-toggle="offcanvas" data-bs-target="#userMenu">
+            <i class="bi bi-person-circle"></i>
+            <span>Akun</span>
+        </a>
+    @else
+        <a href="{{ route('login') }}" class="mobile-nav-item">
+            <i class="bi bi-person"></i>
+            <span>Masuk</span>
+        </a>
+    @endauth
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

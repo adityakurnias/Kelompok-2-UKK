@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('title', 'Kelola Kategori - Admin')
 
@@ -11,21 +11,22 @@
             </h2>
             
             <!-- Form Tambah Kategori -->
-            <div class="card mb-4">
-                <div class="card-header bg-navy text-white">
-                    <h5 class="mb-0">Tambah Kategori Baru</h5>
+            <div class="card mb-4 border-0 shadow-sm" style="border-radius:12px; overflow:hidden;">
+                <div class="card-header bg-navy text-white py-3">
+                    <h5 class="mb-0" style="font-family:'Playfair Display',serif; font-weight:700;">Tambah Kategori Baru</h5>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-4">
                     <form action="{{ route('admin.categories.store') }}" method="POST">
                         @csrf
-                        <div class="row">
-                            <div class="col-md-10">
-                                <input type="text" name="name" class="form-control" 
-                                       placeholder="Nama Kategori" required>
+                        <div class="row g-3 items-end">
+                            <div class="col-12 col-md-9">
+                                <label class="form-label font-size-sm fw-bold text-muted text-uppercase mb-2" style="letter-spacing:1px; font-size:0.7rem;">Nama Kategori</label>
+                                <input type="text" name="name" class="form-control form-control-lg" 
+                                       placeholder="Misal: Pakaian Pria" style="border-radius:10px; font-size:0.9rem; border:1.5px solid #eee;" required>
                             </div>
-                            <div class="col-md-2">
-                                <button type="submit" class="btn btn-navy w-100">
-                                    <i class="bi bi-plus"></i> Tambah
+                            <div class="col-12 col-md-3 d-flex align-items-end">
+                                <button type="submit" class="btn btn-navy btn-lg w-100" style="border-radius:10px; font-size:0.9rem; padding: 0.7rem;">
+                                    <i class="bi bi-plus-lg"></i> Tambah
                                 </button>
                             </div>
                         </div>
@@ -34,9 +35,10 @@
             </div>
             
             <!-- Daftar Kategori -->
-            <div class="card">
-                <div class="card-body">
-                    <table class="table table-hover">
+            <div class="card border-0 shadow-sm" style="border-radius:12px; overflow:hidden;">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0 align-middle">
                         <thead>
                             <tr>
                                 <th>No</th>

@@ -111,7 +111,7 @@
 
     .hero-stats {
         display: flex;
-        gap: 2.5rem;
+        gap: 2rem;
         margin-top: 3rem;
         padding-top: 2rem;
         border-top: 1px solid rgba(255,255,255,0.1);
@@ -120,56 +120,64 @@
     .stat-item span {
         display: block;
         font-family: 'Playfair Display', serif;
-        font-size: 1.6rem;
+        font-size: clamp(1.4rem, 4vw, 1.8rem);
         font-weight: 700;
         color: var(--accent);
     }
 
     .stat-item small {
         color: rgba(255,255,255,0.5);
-        font-size: 0.8rem;
+        font-size: 0.75rem;
+        font-weight: 500;
     }
 
     .hero-image-wrap {
         position: relative;
         display: flex;
         justify-content: center;
+        perspective: 1000px;
     }
 
     .hero-img-card {
         background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 20px;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 24px;
         overflow: hidden;
         width: 100%;
-        max-width: 460px;
+        max-width: 480px;
+        transform: rotateY(-5deg) rotateX(5deg);
+        box-shadow: 20px 20px 60px rgba(0,0,0,0.4);
+        transition: all 0.5s ease;
     }
+
+    .hero-img-card:hover { transform: none; }
 
     .hero-img-card img {
         width: 100%;
-        height: 340px;
+        height: 400px;
         object-fit: cover;
-        opacity: 0.85;
+        opacity: 0.9;
     }
 
     .hero-float-badge {
         position: absolute;
-        bottom: 20px;
-        left: -10px;
+        bottom: 30px;
+        left: -20px;
         background: white;
-        border-radius: 12px;
-        padding: 0.75rem 1rem;
-        box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+        border-radius: 16px;
+        padding: 0.85rem 1.25rem;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.25);
         display: flex;
         align-items: center;
-        gap: 0.6rem;
-        font-size: 0.82rem;
+        gap: 0.75rem;
+        font-size: 0.85rem;
         font-weight: 600;
         color: var(--navy);
+        z-index: 2;
     }
 
     .hero-float-badge i {
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         color: var(--accent);
     }
 
@@ -255,29 +263,7 @@
         background: var(--soft);
     }
 
-    .card-product .card-title {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--ink);
-        margin-bottom: 0.35rem;
-        line-height: 1.4;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .card-product .seller-info {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 0.6rem;
-    }
-
-    .card-product .seller-name {
-        font-size: 0.78rem;
-        color: var(--muted);
-    }
+    /* Section titles and headers are already global or specific enough */
 
     /* ── STEPS ── */
     .steps-section { padding: 4.5rem 0; background: white; }
@@ -338,72 +324,21 @@
         margin: 0;
     }
 
-    /* ── SELLER CTA ── */
-    .seller-cta {
-        background: var(--navy);
-        border-radius: 20px;
-        padding: 3rem 2.5rem;
-        position: relative;
-        overflow: hidden;
-        margin-top: 3rem;
+    @media (max-width: 991px) {
+        .hero { padding: 4rem 0 3rem; text-align: center; }
+        .hero p { margin-left: auto; margin-right: auto; }
+        .hero-cta { justify-content: center; }
+        .hero-stats { justify-content: center; gap: 1.5rem; }
+        .hero-image-wrap { margin-top: 3rem; }
     }
 
-    .seller-cta::after {
-        content: '';
-        position: absolute;
-        right: -60px;
-        top: -60px;
-        width: 260px;
-        height: 260px;
-        border-radius: 50%;
-        background: rgba(232,197,71,0.08);
-        pointer-events: none;
-    }
-
-    .seller-cta h4 {
-        font-family: 'Playfair Display', serif;
-        color: white;
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .seller-cta p {
-        color: rgba(255,255,255,0.6);
-        font-size: 0.9rem;
-        margin-bottom: 0;
-    }
-
-    .seller-steps {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.6rem;
-        margin: 1.5rem 0;
-    }
-
-    .seller-step-pill {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        background: rgba(255,255,255,0.07);
-        border: 1px solid rgba(255,255,255,0.12);
-        border-radius: 8px;
-        padding: 0.45rem 0.85rem;
-        font-size: 0.82rem;
-        color: rgba(255,255,255,0.75);
-    }
-
-    .seller-step-pill .num {
-        background: var(--accent);
-        color: var(--navy);
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.7rem;
-        font-weight: 700;
-        flex-shrink: 0;
+    @media (max-width: 768px) {
+        .hero h1 { font-size: 2.2rem; }
+        .hero-stats { gap: 1rem; flex-wrap: wrap; }
+        .stat-item { flex: 1; min-width: 80px; }
+        .hero-float-badge { left: 50%; transform: translateX(-50%); bottom: -20px; white-space: nowrap; }
+        .seller-cta { padding: 3rem 1.5rem; text-align: center; }
+        .seller-steps { justify-content: center; }
     }
 </style>
 @endpush

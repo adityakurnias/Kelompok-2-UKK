@@ -281,6 +281,16 @@
     .strength-bar.active-weak { background: #e53e3e; }
     .strength-bar.active-medium { background: #f6ad55; }
     .strength-bar.active-strong { background: #48bb78; }
+
+    @media (max-width: 991px) {
+        .auth-wrapper { padding: 2rem 0; align-items: flex-start; }
+        .auth-form-wrap { padding: 2rem 1.5rem; }
+    }
+
+    @media (max-width: 576px) {
+        .auth-form-wrap h4 { font-size: 1.3rem; }
+        .auth-card { border-radius: 12px; }
+    }
 </style>
 @endpush
 

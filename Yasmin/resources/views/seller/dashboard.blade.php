@@ -116,6 +116,21 @@
         font-weight: 600;
         color: var(--ink);
     }
+
+    @media (max-width: 768px) {
+        .welcome-card { padding: 1.5rem; text-align: center; }
+        .welcome-card h2 { font-size: 1.5rem; }
+        .welcome-card .btn { margin-top: 1rem; width: 100%; }
+        .stat-value { font-size: 1.5rem; }
+        .stat-card { padding: 1rem; }
+        .order-item row { flex-wrap: wrap; }
+        .order-item [class^="col-"] { margin-bottom: 0.5rem; }
+    }
+
+    @media (max-width: 576px) {
+        .stat-card { margin-bottom: 1rem; }
+        .quick-action-grid { grid-template-columns: 1fr; }
+    }
 </style>
 @endpush
 
@@ -222,20 +237,20 @@
                 @forelse($recentOrders as $item)
                 <div class="order-item">
                     <div class="row align-items-center">
-                        <div class="col-md-3">
-                            <small class="text-muted">No. Order</small>
-                            <div class="fw-bold">{{ $item->order->order_number }}</div>
+                        <div class="col-6 col-md-3">
+                            <small class="text-muted d-block">No. Order</small>
+                            <div class="fw-bold small">{{ $item->order->order_number }}</div>
                         </div>
-                        <div class="col-md-2">
-                            <small class="text-muted">Produk</small>
-                            <div>{{ Str::limit($item->product->name, 15) }}</div>
+                        <div class="col-6 col-md-2">
+                            <small class="text-muted d-block">Produk</small>
+                            <div class="small">{{ Str::limit($item->product->name, 12) }}</div>
                         </div>
-                        <div class="col-md-2">
-                            <small class="text-muted">Total</small>
-                            <div class="fw-bold text-navy">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</div>
+                        <div class="col-6 col-md-2 mt-2 mt-md-0">
+                            <small class="text-muted d-block">Total</small>
+                            <div class="fw-bold text-navy small">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</div>
                         </div>
-                        <div class="col-md-2">
-                            <small class="text-muted">Status</small>
+                        <div class="col-6 col-md-2 mt-2 mt-md-0">
+                            <small class="text-muted d-block">Status</small>
                             <div>
                                 @php
                                     $statusClass = [
@@ -246,11 +261,11 @@
                                         'cancelled' => 'danger'
                                     ][$item->order->status] ?? 'secondary';
                                 @endphp
-                                <span class="badge bg-{{ $statusClass }}">{{ ucfirst($item->order->status) }}</span>
+                                <span class="badge bg-{{ $statusClass }}" style="font-size: 0.65rem;">{{ ucfirst($item->order->status) }}</span>
                             </div>
                         </div>
-                        <div class="col-md-3 text-end">
-                            <a href="#" class="btn btn-sm btn-outline-navy">Detail</a>
+                        <div class="col-12 col-md-3 text-md-end mt-3 mt-md-0">
+                            <a href="#" class="btn btn-sm btn-outline-navy w-100 w-md-auto">Detail</a>
                         </div>
                     </div>
                 </div>

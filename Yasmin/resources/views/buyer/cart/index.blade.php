@@ -38,10 +38,10 @@
                                 <img src="{{ asset('storage/products/' . $item->product->image) }}" 
                                      class="img-fluid rounded" alt="{{ $item->product->name }}">
                             </div>
-                            <div class="col-md-5 col-8">
-                                <h6>{{ $item->product->name }}</h6>
-                                <p class="text-muted mb-1">
-                                    <small>Penjual: {{ $item->product->user->name }}</small>
+                            <div class="col-md-5 col-8 ps-md-0">
+                                <h6 class="mb-1 text-truncate">{{ $item->product->name }}</h6>
+                                <p class="text-muted mb-1 small">
+                                    Penjual: <b>{{ $item->product->user->name }}</b>
                                 </p>
                                 <p class="text-navy fw-bold mb-0">
                                     Rp {{ number_format($item->product->price, 0, ',', '.') }}
@@ -98,14 +98,18 @@
                             </tr>
                         </table>
                         
-                        <a href="{{ route('checkout.index') }}" class="btn btn-navy w-100">
+                        <a href="{{ route('checkout.index') }}" class="btn btn-navy w-100 py-2 fw-bold">
                             <i class="bi bi-cart-check"></i> Checkout
                         </a>
                         
-                        <a href="{{ route('products.index') }}" class="btn btn-outline-navy w-100 mt-2">
-                            <i class="bi bi-arrow-left"></i> Lanjut Belanja
+                        <a href="{{ route('products.index') }}" class="btn btn-outline-navy w-100 mt-2 py-2 small">
+                            Lanjut Belanja
                         </a>
                     </div>
+                </div>
+
+                <div class="mt-4 p-3 bg-light rounded text-muted small d-lg-none">
+                    <i class="bi bi-info-circle me-1"></i> Periksa kembali barang belanjaan Anda sebelum melakukan checkout.
                 </div>
             </div>
         @else

@@ -311,6 +311,15 @@
         font-size: 0.75rem;
         color: var(--muted);
     }
+
+    @media (max-width: 768px) {
+        .page-header h1 { font-size: 1.4rem; }
+        .stat-value { font-size: 1.75rem; }
+        .admin-banner { padding: 1.25rem; flex-direction: column; text-align: center; }
+        .admin-banner i { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .info-card-header { padding: 0.75rem 1rem; }
+        .info-card-header h6 { font-size: 0.75rem; }
+    }
 </style>
 @endpush
 

@@ -510,6 +510,28 @@
     }
 
     .btn-modal-cancel:hover { border-color: var(--ink); color: var(--ink); }
+
+    /* ── MOBILE CARD LIST ── */
+    .req-mobile-list { display: none; }
+    .req-card-mob {
+        background: white;
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        padding: 1rem;
+        margin: 1rem;
+    }
+    .req-card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .req-card-body { font-size: 0.85rem; }
+    .req-card-field { display: flex; justify-content: space-between; margin-bottom: 0.4rem; border-bottom: 1px dashed var(--border); padding-bottom: 0.3rem; }
+    .req-card-label { color: var(--muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+
+    @media (max-width: 991px) {
+        .req-table-container { display: none; }
+        .req-mobile-list { display: block; }
+        .filter-bar { padding: 1rem; }
+        .stats-row { padding: 0 0.5rem; justify-content: center; }
+        .table-card-header { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+    }
 </style>
 @endpush
 
@@ -601,7 +623,7 @@
     </form>
 </div>
 
-{{-- ── TABLE ── --}}
+{{-- ── TABLE & LIST ── --}}
 <div class="table-card">
     <div class="table-card-header">
         <h6>
@@ -615,8 +637,8 @@
         @endif
     </div>
 
-    <div style="overflow-x:auto">
-        <table class="req-table">
+    <div class="req-table-container">
+        <table class="req-table" style="width:100%; overflow-x:auto;">
             <thead>
                 <tr>
                     <th style="width:40px">#</th>
@@ -703,212 +725,6 @@
                         </div>
                     </td>
                 </tr>
-
-                {{-- ── DETAIL MODAL (TANPA FOTO KTP) ── --}}
-                <div class="modal fade" id="detailModal{{ $req->id }}" tabindex="-1">
-                    <div class="modal-dialog modal-lg modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title"><i class="bi bi-shop me-2"></i>Detail Seller Request</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-
-                                {{-- Applicant card --}}
-                                <div class="applicant-card">
-                                    <div class="av"><i class="bi bi-person-fill"></i></div>
-                                    <div>
-                                        <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:0.25rem">
-                                            {{ $req->user->name }}
-                                        </div>
-                                        <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.3rem">
-                                            {{ $req->user->email }} · {{ $req->user->phone ?? '—' }}
-                                        </div>
-                                        @if($req->status == 'pending')
-                                            <span class="badge-status pending"><span class="dot"></span> Pending</span>
-                                        @elseif($req->status == 'approved')
-                                            <span class="badge-status approved"><span class="dot"></span> Disetujui</span>
-                                        @else
-                                            <span class="badge-status rejected"><span class="dot"></span> Ditolak</span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                {{-- Data Toko --}}
-                                <div class="detail-section">
-                                    <div class="detail-section-title"><i class="bi bi-shop"></i> Data Toko</div>
-                                    <div class="detail-grid">
-                                        <div class="detail-field">
-                                            <label>Nama Toko</label>
-                                            <p>{{ $req->shop_name }}</p>
-                                        </div>
-                                        <div class="detail-field">
-                                            <label>WhatsApp</label>
-                                            <p>
-                                                <a href="https://wa.me/{{ $req->whatsapp_number }}" target="_blank"
-                                                   style="color:#25d366;text-decoration:none;font-weight:600">
-                                                    <i class="bi bi-whatsapp me-1"></i>{{ $req->whatsapp_number }}
-                                                </a>
-                                            </p>
-                                        </div>
-                                        <div class="detail-field" style="grid-column:span 2">
-                                            <label>Alamat Toko</label>
-                                            <div class="detail-text-box">{{ $req->shop_address }}</div>
-                                        </div>
-                                        <div class="detail-field" style="grid-column:span 2">
-                                            <label>Deskripsi Toko</label>
-                                            <div class="detail-text-box">{{ $req->shop_description }}</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{-- Keterangan KTP --}}
-                                <div class="detail-section">
-                                    <div class="detail-section-title"><i class="bi bi-person-badge"></i> Foto KTP</div>
-                                    @if($req->ktp_image)
-                                        <div class="mt-2 text-center">
-                                            <a href="{{ asset('storage/ktp/' . $req->ktp_image) }}" target="_blank">
-                                                <img src="{{ asset('storage/ktp/' . $req->ktp_image) }}" alt="Foto KTP {{ $req->user->name }}" class="img-fluid rounded border" style="max-height: 250px; object-fit: contain;">
-                                            </a>
-                                            <div class="mt-2 text-muted" style="font-size: 0.8rem;">
-                                                <i class="bi bi-zoom-in"></i> Klik gambar untuk memperbesar
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div class="alert alert-warning mb-0">
-                                            <i class="bi bi-exclamation-triangle"></i> Seller ini tidak mengunggah Foto KTP.
-                                        </div>
-                                    @endif
-                                </div>
-
-                                {{-- Admin Note (if exists) --}}
-                                @if($req->admin_note)
-                                <div class="detail-section" style="margin-bottom:0">
-                                    <div class="detail-section-title"><i class="bi bi-chat-text"></i> Catatan Admin</div>
-                                    <div class="note-box">
-                                        <i class="bi bi-chat-quote-fill" style="flex-shrink:0;margin-top:0.1rem"></i>
-                                        {{ $req->admin_note }}
-                                    </div>
-                                </div>
-                                @endif
-
-                            </div>
-                            <div class="modal-footer">
-                                @if($req->status == 'pending')
-                                    <button type="button" class="btn-modal-confirm success"
-                                            data-bs-dismiss="modal"
-                                            onclick="setTimeout(() => document.getElementById('approveTrigger{{ $req->id }}').click(), 300)">
-                                        <i class="bi bi-check-lg"></i> Setujui
-                                    </button>
-                                    <button type="button" class="btn-modal-confirm danger"
-                                            data-bs-dismiss="modal"
-                                            onclick="setTimeout(() => document.getElementById('rejectTrigger{{ $req->id }}').click(), 300)">
-                                        <i class="bi bi-x-lg"></i> Tolak
-                                    </button>
-                                @endif
-                                <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Tutup</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- ── APPROVE MODAL ── --}}
-                <button id="approveTrigger{{ $req->id }}" class="d-none" type="button"
-                        data-bs-toggle="modal" data-bs-target="#approveModal{{ $req->id }}"></button>
-
-                <div class="modal fade" id="approveModal{{ $req->id }}" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <form action="{{ route('admin.seller-requests.approve', $req->id) }}" method="POST">
-                                @csrf @method('PUT')
-                                <div class="modal-header">
-                                    <h5 class="modal-title">
-                                        <i class="bi bi-check-circle me-2" style="color:#38a169"></i>Setujui Permohonan
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="applicant-card" style="margin-bottom:1rem">
-                                        <div class="av" style="width:44px;height:44px;border-radius:11px;font-size:1.1rem">
-                                            <i class="bi bi-person-fill"></i>
-                                        </div>
-                                        <div>
-                                            <div style="font-weight:700;color:var(--navy)">{{ $req->user->name }}</div>
-                                            <div style="font-size:0.8rem;color:var(--muted)">Toko: {{ $req->shop_name }}</div>
-                                        </div>
-                                    </div>
-
-                                    <div style="background:#f0fff4;border:1.5px solid #c6f6d5;border-radius:10px;padding:0.85rem 1rem;display:flex;gap:0.6rem;align-items:flex-start;margin-bottom:1rem">
-                                        <i class="bi bi-info-circle-fill" style="color:#38a169;flex-shrink:0;margin-top:0.1rem"></i>
-                                        <span style="font-size:0.82rem;color:#276749;line-height:1.5">
-                                            User akan otomatis berganti role menjadi <strong>Seller</strong> setelah disetujui.
-                                        </span>
-                                    </div>
-
-                                    <label style="font-size:0.78rem;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:0.5rem">
-                                        Catatan untuk Seller <span style="color:var(--muted);font-weight:400">(Opsional)</span>
-                                    </label>
-                                    <textarea name="note" class="textarea-styled" rows="3"
-                                              placeholder="Pesan selamat atau instruksi untuk seller baru..."></textarea>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn-modal-confirm success">
-                                        <i class="bi bi-check-lg me-1"></i> Konfirmasi Setujui
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- ── REJECT MODAL ── --}}
-                <button id="rejectTrigger{{ $req->id }}" class="d-none" type="button"
-                        data-bs-toggle="modal" data-bs-target="#rejectModal{{ $req->id }}"></button>
-
-                <div class="modal fade" id="rejectModal{{ $req->id }}" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <form action="{{ route('admin.seller-requests.reject', $req->id) }}" method="POST">
-                                @csrf @method('PUT')
-                                <div class="modal-header">
-                                    <h5 class="modal-title">
-                                        <i class="bi bi-x-circle me-2" style="color:#e53e3e"></i>Tolak Permohonan
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="applicant-card" style="margin-bottom:1rem">
-                                        <div class="av" style="width:44px;height:44px;border-radius:11px;font-size:1.1rem">
-                                            <i class="bi bi-person-fill"></i>
-                                        </div>
-                                        <div>
-                                            <div style="font-weight:700;color:var(--navy)">{{ $req->user->name }}</div>
-                                            <div style="font-size:0.8rem;color:var(--muted)">Toko: {{ $req->shop_name }}</div>
-                                        </div>
-                                    </div>
-
-                                    <label style="font-size:0.78rem;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:0.5rem">
-                                        Alasan Penolakan <span style="color:#e53e3e">*</span>
-                                    </label>
-                                    <textarea name="note" class="textarea-styled" rows="4"
-                                              placeholder="Contoh: Nama toko tidak sesuai, deskripsi tidak jelas..."
-                                              required></textarea>
-                                    <p style="font-size:0.78rem;color:var(--muted);margin-top:0.5rem;margin-bottom:0">
-                                        <i class="bi bi-info-circle me-1"></i> Alasan ini akan dikirim ke pemohon sebagai notifikasi.
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn-modal-confirm danger">
-                                        <i class="bi bi-x-lg me-1"></i> Konfirmasi Tolak
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
                 @empty
                 <tr>
                     <td colspan="6">
@@ -922,6 +738,262 @@
             </tbody>
         </table>
     </div>
+
+    {{-- Mobile List --}}
+    {{-- Mobile List --}}
+    <div class="req-mobile-list">
+        @forelse($requests as $index => $req)
+            <div class="req-card-mob">
+                <div class="req-card-header">
+                    <div class="applicant-avatar">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                    <div>
+                        <div class="applicant-name">{{ $req->user->name }}</div>
+                        <div class="applicant-email text-truncate" style="max-width: 150px;">{{ $req->user->email }}</div>
+                    </div>
+                    <div class="ms-auto">
+                        @if($req->status == 'pending')
+                            <span class="badge bg-warning text-dark small" style="font-size:0.6rem">PENDING</span>
+                        @elseif($req->status == 'approved')
+                            <span class="badge bg-success small" style="font-size:0.6rem">APPROVED</span>
+                        @else
+                            <span class="badge bg-danger small" style="font-size:0.6rem">REJECTED</span>
+                        @endif
+                    </div>
+                </div>
+                <div class="req-card-body">
+                    <div class="req-card-field">
+                        <span class="req-card-label">Toko</span>
+                        <span>{{ $req->shop_name }}</span>
+                    </div>
+                    <div class="req-card-field">
+                        <span class="req-card-label">WhatsApp</span>
+                        <span>{{ $req->whatsapp_number }}</span>
+                    </div>
+                    <div class="req-card-field">
+                        <span class="req-card-label">Tanggal</span>
+                        <span>{{ $req->created_at->format('d M y') }}</span>
+                    </div>
+                    <div class="mt-3 d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-navy flex-grow-1" data-bs-toggle="modal" data-bs-target="#detailModal{{ $req->id }}">
+                             Detail
+                        </button>
+                        @if($req->status == 'pending')
+                             <button class="btn btn-sm btn-success flex-grow-1" data-bs-toggle="modal" data-bs-target="#approveModal{{ $req->id }}">
+                                Approve
+                            </button>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="empty-state">
+                <i class="bi bi-inbox"></i>
+                <p>Tidak ada seller request ditemukan</p>
+            </div>
+        @endforelse
+    </div>
+
+    {{-- Modals Loop --}}
+    @foreach($requests as $req)
+        {{-- ── DETAIL MODAL ── --}}
+        <div class="modal fade" id="detailModal{{ $req->id }}" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><i class="bi bi-shop me-2"></i>Detail Seller Request</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="applicant-card">
+                            <div class="av"><i class="bi bi-person-fill"></i></div>
+                            <div>
+                                <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:0.25rem">
+                                    {{ $req->user->name }}
+                                </div>
+                                <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.3rem">
+                                    {{ $req->user->email }} · {{ $req->user->phone ?? '—' }}
+                                </div>
+                                @if($req->status == 'pending')
+                                    <span class="badge-status pending"><span class="dot"></span> Pending</span>
+                                @elseif($req->status == 'approved')
+                                    <span class="badge-status approved"><span class="dot"></span> Disetujui</span>
+                                @else
+                                    <span class="badge-status rejected"><span class="dot"></span> Ditolak</span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <div class="detail-section-title"><i class="bi bi-shop"></i> Data Toko</div>
+                            <div class="detail-grid">
+                                <div class="detail-field">
+                                    <label>Nama Toko</label>
+                                    <p>{{ $req->shop_name }}</p>
+                                </div>
+                                <div class="detail-field">
+                                    <label>WhatsApp</label>
+                                    <p>
+                                        <a href="https://wa.me/{{ $req->whatsapp_number }}" target="_blank"
+                                           style="color:#25d366;text-decoration:none;font-weight:600">
+                                            <i class="bi bi-whatsapp me-1"></i>{{ $req->whatsapp_number }}
+                                        </a>
+                                    </p>
+                                </div>
+                                <div class="detail-field" style="grid-column:span 2">
+                                    <label>Alamat Toko</label>
+                                    <div class="detail-text-box">{{ $req->shop_address }}</div>
+                                </div>
+                                <div class="detail-field" style="grid-column:span 2">
+                                    <label>Deskripsi Toko</label>
+                                    <div class="detail-text-box">{{ $req->shop_description }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <div class="detail-section-title"><i class="bi bi-person-badge"></i> Foto KTP</div>
+                            @if($req->ktp_image)
+                                <div class="mt-2 text-center">
+                                    <a href="{{ asset('storage/ktp/' . $req->ktp_image) }}" target="_blank">
+                                        <img src="{{ asset('storage/ktp/' . $req->ktp_image) }}" alt="Foto KTP {{ $req->user->name }}" class="img-fluid rounded border" style="max-height: 250px; object-fit: contain;">
+                                    </a>
+                                    <div class="mt-2 text-muted" style="font-size: 0.8rem;">
+                                        <i class="bi bi-zoom-in"></i> Klik gambar untuk memperbesar
+                                    </div>
+                                </div>
+                            @else
+                                <div class="alert alert-warning mb-0">
+                                    <i class="bi bi-exclamation-triangle"></i> Seller ini tidak mengunggah Foto KTP.
+                                </div>
+                            @endif
+                        </div>
+
+                        @if($req->admin_note)
+                        <div class="detail-section" style="margin-bottom:0">
+                            <div class="detail-section-title"><i class="bi bi-chat-text"></i> Catatan Admin</div>
+                            <div class="note-box">
+                                <i class="bi bi-chat-quote-fill" style="flex-shrink:0;margin-top:0.1rem"></i>
+                                {{ $req->admin_note }}
+                            </div>
+                        </div>
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        @if($req->status == 'pending')
+                            <button type="button" class="btn-modal-confirm success"
+                                    data-bs-dismiss="modal"
+                                    onclick="setTimeout(() => document.getElementById('approveTrigger{{ $req->id }}').click(), 300)">
+                                <i class="bi bi-check-lg"></i> Setujui
+                            </button>
+                            <button type="button" class="btn-modal-confirm danger"
+                                    data-bs-dismiss="modal"
+                                    onclick="setTimeout(() => document.getElementById('rejectTrigger{{ $req->id }}').click(), 300)">
+                                <i class="bi bi-x-lg"></i> Tolak
+                            </button>
+                        @endif
+                        <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ── APPROVE MODAL ── --}}
+        <button id="approveTrigger{{ $req->id }}" class="d-none" type="button"
+                data-bs-toggle="modal" data-bs-target="#approveModal{{ $req->id }}"></button>
+
+        <div class="modal fade" id="approveModal{{ $req->id }}" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="{{ route('admin.seller-requests.approve', $req->id) }}" method="POST">
+                        @csrf @method('PUT')
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <i class="bi bi-check-circle me-2" style="color:#38a169"></i>Setujui Permohonan
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="applicant-card" style="margin-bottom:1rem">
+                                <div class="av" style="width:44px;height:44px;border-radius:11px;font-size:1.1rem">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+                                <div>
+                                    <div style="font-weight:700;color:var(--navy)">{{ $req->user->name }}</div>
+                                    <div style="font-size:0.8rem;color:var(--muted)">Toko: {{ $req->shop_name }}</div>
+                                </div>
+                            </div>
+                            <div style="background:#f0fff4;border:1.5px solid #c6f6d5;border-radius:10px;padding:0.85rem 1rem;display:flex;gap:0.6rem;align-items:flex-start;margin-bottom:1rem">
+                                <i class="bi bi-info-circle-fill" style="color:#38a169;flex-shrink:0;margin-top:0.1rem"></i>
+                                <span style="font-size:0.82rem;color:#276749;line-height:1.5">
+                                    User akan otomatis berganti role menjadi <strong>Seller</strong> setelah disetujui.
+                                </span>
+                            </div>
+                            <label style="font-size:0.78rem;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:0.5rem">
+                                Catatan untuk Seller <span style="color:var(--muted);font-weight:400">(Opsional)</span>
+                            </label>
+                            <textarea name="note" class="textarea-styled" rows="3"
+                                      placeholder="Pesan selamat atau instruksi untuk seller baru..."></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn-modal-confirm success">
+                                <i class="bi bi-check-lg me-1"></i> Konfirmasi Setujui
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        {{-- ── REJECT MODAL ── --}}
+        <button id="rejectTrigger{{ $req->id }}" class="d-none" type="button"
+                data-bs-toggle="modal" data-bs-target="#rejectModal{{ $req->id }}"></button>
+
+        <div class="modal fade" id="rejectModal{{ $req->id }}" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="{{ route('admin.seller-requests.reject', $req->id) }}" method="POST">
+                        @csrf @method('PUT')
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                <i class="bi bi-x-circle me-2" style="color:#e53e3e"></i>Tolak Permohonan
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="applicant-card" style="margin-bottom:1rem">
+                                <div class="av" style="width:44px;height:44px;border-radius:11px;font-size:1.1rem">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+                                <div>
+                                    <div style="font-weight:700;color:var(--navy)">{{ $req->user->name }}</div>
+                                    <div style="font-size:0.8rem;color:var(--muted)">Toko: {{ $req->shop_name }}</div>
+                                </div>
+                            </div>
+                            <label style="font-size:0.78rem;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:0.5rem">
+                                Alasan Penolakan <span style="color:#e53e3e">*</span>
+                            </label>
+                            <textarea name="note" class="textarea-styled" rows="4"
+                                      placeholder="Contoh: Nama toko tidak sesuai, deskripsi tidak jelas..."
+                                      required></textarea>
+                            <p style="font-size:0.78rem;color:var(--muted);margin-top:0.5rem;margin-bottom:0">
+                                <i class="bi bi-info-circle me-1"></i> Alasan ini akan dikirim ke pemohon sebagai notifikasi.
+                            </p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn-modal-confirm danger">
+                                <i class="bi bi-x-lg me-1"></i> Konfirmasi Tolak
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
 
     <div class="pagination-wrap">
         <span class="pagination-info">

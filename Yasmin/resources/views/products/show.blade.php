@@ -276,6 +276,22 @@
         .action-row {
             display: flex;
             gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 991px) {
+            .img-panel { position: relative; top: 0; margin-bottom: 1.5rem; }
+            .img-panel img { height: 320px; }
+            .info-panel { padding: 1.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            .product-name { font-size: 1.6rem; }
+            .action-row { flex-direction: column; }
+            .btn-add-cart, .btn-whatsapp, .btn-edit { width: 100%; justify-content: center; }
+            .img-panel img { height: 280px; }
+            .detail-wrapper { padding-top: 1rem; }
+            .breadcrumb { display: none; }
         }
 
         .sold-notice {
@@ -509,23 +525,20 @@
                         @foreach($relatedProducts as $related)
                             <div class="col-lg-3 col-md-4 col-6">
                                 <div class="card-product">
-                                    <div class="position-relative">
+                                    <div class="position-relative overflow-hidden">
                                         <img src="{{ asset('storage/products/' . $related->image) }}" alt="{{ $related->name }}">
                                         <span class="badge-condition">
-                                            {{ $related->condition == 'baru' ? 'Baru' : ($related->condition == 'seperti_baru' ? 'Seperti Baru' : 'Bekas') }}
+                                            {{ $related->condition == 'baru' ? 'Baru' : ($related->condition == 'seperti_baru' ? 'Spt Baru' : 'Bekas') }}
                                         </span>
                                     </div>
                                     <div class="card-body">
-                                        <p class="card-title"
-                                            style="font-size:0.88rem;font-weight:600;color:var(--ink);margin-bottom:0.3rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.4">
-                                            {{ $related->name }}</p>
+                                        <p class="card-title">{{ Str::limit($related->name, 40) }}</p>
                                         <p class="price">Rp {{ number_format($related->price, 0, ',', '.') }}</p>
-                                        <div
-                                            style="display:flex;align-items:center;justify-content:space-between;margin-top:0.5rem">
-                                            <span style="font-size:0.75rem;color:var(--muted)"><i
-                                                    class="bi bi-person-circle me-1"></i>{{ $related->user->name }}</span>
-                                            <a href="{{ route('products.show', $related) }}" class="btn-navy"
-                                                style="font-size:0.78rem;padding:0.35rem 0.85rem;border-radius:6px;text-decoration:none">Detail</a>
+                                        <div class="seller-info">
+                                            <span class="seller-name text-truncate">
+                                                <i class="bi bi-person-circle"></i> {{ $related->user->name }}
+                                            </span>
+                                            <a href="{{ route('products.show', $related) }}" class="btn-navy btn-sm" style="padding: 0.25rem 0.65rem; font-size: 0.75rem;">Detail</a>
                                         </div>
                                     </div>
                                 </div>

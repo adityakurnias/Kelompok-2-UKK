@@ -390,13 +390,6 @@
         font-family: 'DM Sans', sans-serif;
     }
 
-    .textarea-styled:focus {
-        border-color: var(--navy);
-        background: white;
-        box-shadow: 0 0 0 3px rgba(15,36,68,0.08);
-        outline: none;
-    }
-
     .btn-modal-confirm {
         background: var(--navy);
         color: white;
@@ -413,9 +406,7 @@
 
     .btn-modal-confirm:hover { background: var(--navy-mid); color: white; }
     .btn-modal-confirm.danger { background: #e53e3e; }
-    .btn-modal-confirm.danger:hover { background: #c53030; }
     .btn-modal-confirm.warning { background: #d69e2e; }
-    .btn-modal-confirm.warning:hover { background: #b7791f; }
 
     .btn-modal-cancel {
         background: white;
@@ -493,20 +484,29 @@
         box-shadow: 0 0 0 3px rgba(15,36,68,0.08);
     }
     
-    /* ── ALERT ── */
-    .alert-success {
-        background: #f0fff4;
-        border: 1.5px solid #c6f6d5;
+    /* ── MOBILE CARD LIST ── */
+    .user-mobile-list { display: none; }
+    .user-card-mob {
+        background: white;
+        border: 1.5px solid var(--border);
         border-radius: 12px;
-        color: #276749;
-        padding: 1rem 1.25rem;
-        margin-bottom: 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
+        padding: 1rem;
+        margin: 1rem;
     }
-    
-    .alert-success i { font-size: 1.2rem; color: #48bb78; }
+    .user-card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
+    .user-card-body { font-size: 0.85rem; }
+    .user-card-field { display: flex; justify-content: space-between; margin-bottom: 0.4rem; border-bottom: 1px dashed var(--border); padding-bottom: 0.3rem; }
+    .user-card-field:last-child { border-bottom: none; }
+    .user-card-label { color: var(--muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+
+    @media (max-width: 991px) {
+        .users-table-container { display: none; }
+        .user-mobile-list { display: block; }
+        .filter-bar { padding: 1rem; }
+        .stats-row { padding: 0 0.5rem; justify-content: center; }
+        .table-card-header { flex-direction: column; align-items: stretch; }
+        .btn-filter { width: 100%; justify-content: center; }
+    }
 </style>
 @endpush
 
@@ -519,9 +519,9 @@
 
 {{-- Success Alert --}}
 @if(session('success'))
-    <div class="alert-success">
-        <i class="bi bi-check-circle-fill"></i>
-        <span>{{ session('success') }}</span>
+    <div class="alert alert-success d-flex align-items-center mb-4" role="alert" style="border-radius:12px">
+        <i class="bi bi-check-circle-fill me-2"></i>
+        <div>{{ session('success') }}</div>
     </div>
 @endif
 
@@ -582,15 +582,6 @@
             </select>
         </div>
 
-        <div class="filter-group">
-            <label>Urutkan</label>
-            <select name="sort" class="form-select">
-                <option value="latest" {{ request('sort','latest') == 'latest' ? 'selected' : '' }}>Terbaru</option>
-                <option value="oldest" {{ request('sort') == 'oldest' ? 'selected' : '' }}>Terlama</option>
-                <option value="name"   {{ request('sort') == 'name'   ? 'selected' : '' }}>Nama A-Z</option>
-            </select>
-        </div>
-
         <div class="filter-actions">
             <button type="submit" class="btn-filter"><i class="bi bi-funnel"></i> Filter</button>
             <a href="{{ route('admin.users') }}" class="btn-filter-ghost"><i class="bi bi-x-lg"></i> Reset</a>
@@ -610,8 +601,8 @@
         </button>
     </div>
 
-    <div style="overflow-x:auto">
-        <table class="users-table">
+    <div class="users-table-container">
+        <table class="users-table" style="width:100%; overflow-x:auto;">
             <thead>
                 <tr>
                     <th style="width:40px">#</th>
@@ -627,16 +618,14 @@
             <tbody>
                 @forelse($users as $index => $user)
                 <tr>
-                    <td style="color:var(--muted);font-size:0.8rem">{{ $users->firstItem() + $index }}</td>
-
-                    {{-- User --}}
+                    <td>{{ $users->firstItem() + $index }}</td>
                     <td>
                         <div class="user-cell">
                             <div class="user-avatar">
                                 @if($user->photo)
-                                    <img src="{{ asset('storage/users/' . $user->photo) }}" alt="{{ $user->name }}">
+                                    <img src="{{ asset('storage/users/' . $user->photo) }}">
                                 @else
-                                    <i class="bi bi-person-fill" style="font-size:1rem"></i>
+                                    <i class="bi bi-person-fill"></i>
                                 @endif
                             </div>
                             <div>
@@ -645,22 +634,13 @@
                             </div>
                         </div>
                     </td>
-
-                    {{-- Email --}}
-                    <td style="font-size:0.85rem">{{ $user->email }}</td>
-
-                    {{-- Phone --}}
-                    <td style="font-size:0.85rem;color:var(--muted)">{{ $user->phone ?? '—' }}</td>
-
-                    {{-- Role --}}
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->phone ?? '—' }}</td>
                     <td>
                         <span class="badge-role {{ $user->role }}">
-                            <span class="dot"></span>
-                            {{ ucfirst($user->role) }}
+                            <span class="dot"></span> {{ ucfirst($user->role) }}
                         </span>
                     </td>
-
-                    {{-- Status --}}
                     <td>
                         @if(isset($user->is_blocked) && $user->is_blocked)
                             <span class="badge-status blocked"><span class="dot"></span> Diblokir</span>
@@ -668,28 +648,13 @@
                             <span class="badge-status active"><span class="dot"></span> Aktif</span>
                         @endif
                     </td>
-
-                    {{-- Joined --}}
-                    <td>
-                        <span style="font-size:0.8rem;color:var(--muted)">
-                            {{ $user->created_at->format('d M Y') }}<br>
-                            <span style="font-size:0.72rem">{{ $user->created_at->diffForHumans() }}</span>
-                        </span>
-                    </td>
-
-                    {{-- Actions --}}
+                    <td><span style="font-size:0.8rem;color:var(--muted)">{{ $user->created_at->format('d/m/y') }}</span></td>
                     <td>
                         <div class="action-group">
-                            {{-- Detail --}}
-                            <button class="btn-action view" type="button"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#detailModal{{ $user->id }}"
-                                    title="Lihat Detail">
+                            <button class="btn-action view" type="button" data-bs-toggle="modal" data-bs-target="#detailModal{{ $user->id }}" title="Lihat Detail">
                                 <i class="bi bi-eye"></i>
                             </button>
-
                             @if($user->role != 'admin')
-                                {{-- Block / Unblock --}}
                                 @if(isset($user->is_blocked) && $user->is_blocked)
                                     <form action="{{ route('admin.users.block', $user->id) }}" method="POST" class="d-inline">
                                         @csrf @method('PUT')
@@ -699,236 +664,17 @@
                                         </button>
                                     </form>
                                 @else
-                                    <button class="btn-action block" type="button"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#blockModal{{ $user->id }}"
-                                            title="Blokir User">
+                                    <button class="btn-action block" type="button" data-bs-toggle="modal" data-bs-target="#blockModal{{ $user->id }}" title="Blokir User">
                                         <i class="bi bi-shield-lock"></i>
                                     </button>
                                 @endif
-
-                                {{-- Delete --}}
-                                <button class="btn-action delete" type="button"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal{{ $user->id }}"
-                                        title="Hapus User">
+                                <button class="btn-action delete" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}" title="Hapus User">
                                     <i class="bi bi-trash3"></i>
                                 </button>
                             @endif
                         </div>
                     </td>
                 </tr>
-
-                {{-- ── DETAIL MODAL ── --}}
-                <div class="modal fade" id="detailModal{{ $user->id }}" tabindex="-1">
-                    <div class="modal-dialog modal-lg modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title"><i class="bi bi-person-circle me-2"></i>Detail User</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                {{-- User header --}}
-                                <div class="detail-user-card">
-                                    <div class="detail-avatar">
-                                        @if($user->photo)
-                                            <img src="{{ asset('storage/users/' . $user->photo) }}" alt="{{ $user->name }}">
-                                        @else
-                                            <i class="bi bi-person-fill"></i>
-                                        @endif
-                                    </div>
-                                    <div>
-                                        <div style="font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--navy);margin-bottom:0.25rem">
-                                            {{ $user->name }}
-                                        </div>
-                                        <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap">
-                                            <span class="badge-role {{ $user->role }}">
-                                                <span class="dot"></span> {{ ucfirst($user->role) }}
-                                            </span>
-                                            @if(isset($user->is_blocked) && $user->is_blocked)
-                                                <span class="badge-status blocked"><span class="dot"></span> Diblokir</span>
-                                            @else
-                                                <span class="badge-status active"><span class="dot"></span> Aktif</span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{-- Stats --}}
-                                @php
-                                    $productCount = \App\Models\Product::where('user_id', $user->id)->count();
-                                    $orderCount   = \App\Models\Order::where('buyer_id', $user->id)->count();
-                                    $sellerReqCount = \App\Models\SellerRequest::where('user_id', $user->id)->count();
-                                @endphp
-                                <div class="detail-stats">
-                                    <div class="detail-stat-box">
-                                        <div class="val">{{ $productCount }}</div>
-                                        <div class="lbl">Produk</div>
-                                    </div>
-                                    <div class="detail-stat-box">
-                                        <div class="val">{{ $orderCount }}</div>
-                                        <div class="lbl">Pesanan</div>
-                                    </div>
-                                    <div class="detail-stat-box">
-                                        <div class="val">{{ $sellerReqCount }}</div>
-                                        <div class="lbl">Seller Request</div>
-                                    </div>
-                                </div>
-
-                                {{-- Info grid --}}
-                                <div class="detail-info-grid">
-                                    <div class="detail-field">
-                                        <label>Email</label>
-                                        <p>{{ $user->email }}</p>
-                                    </div>
-                                    <div class="detail-field">
-                                        <label>Nomor Telepon</label>
-                                        <p>{{ $user->phone ?? '—' }}</p>
-                                    </div>
-                                    <div class="detail-field" style="grid-column: span 2">
-                                        <label>Alamat</label>
-                                        <p>{{ $user->address ?? '—' }}</p>
-                                    </div>
-                                    <div class="detail-field">
-                                        <label>Bergabung</label>
-                                        <p>{{ $user->created_at->format('d M Y, H:i') }}</p>
-                                    </div>
-                                    <div class="detail-field">
-                                        <label>Terakhir Update</label>
-                                        <p>{{ $user->updated_at->format('d M Y, H:i') }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                @if($user->role != 'admin')
-                                    @if(isset($user->is_blocked) && $user->is_blocked)
-                                        <form action="{{ route('admin.users.block', $user->id) }}" method="POST">
-                                            @csrf @method('PUT')
-                                            <input type="hidden" name="action" value="unblock">
-                                            <button type="submit" class="btn-modal-confirm">
-                                                <i class="bi bi-shield-check"></i> Buka Blokir
-                                            </button>
-                                        </form>
-                                    @else
-                                        <button type="button" class="btn-modal-confirm warning"
-                                                data-bs-dismiss="modal"
-                                                onclick="setTimeout(() => document.getElementById('blockTrigger{{ $user->id }}').click(), 300)">
-                                            <i class="bi bi-shield-lock"></i> Blokir User
-                                        </button>
-                                    @endif
-                                    <button type="button" class="btn-modal-confirm danger"
-                                            data-bs-dismiss="modal"
-                                            onclick="setTimeout(() => document.getElementById('deleteTrigger{{ $user->id }}').click(), 300)">
-                                        <i class="bi bi-trash3"></i> Hapus User
-                                    </button>
-                                @endif
-                                <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Tutup</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- ── BLOCK MODAL ── --}}
-                <button id="blockTrigger{{ $user->id }}" class="d-none" type="button"
-                        data-bs-toggle="modal" data-bs-target="#blockModal{{ $user->id }}"></button>
-
-                <div class="modal fade" id="blockModal{{ $user->id }}" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <form action="{{ route('admin.users.block', $user->id) }}" method="POST">
-                                @csrf @method('PUT')
-                                <input type="hidden" name="action" value="block">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">
-                                        <i class="bi bi-shield-lock me-2" style="color:#d69e2e"></i>Blokir User
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="detail-user-card" style="margin-bottom:1rem">
-                                        <div class="detail-avatar" style="width:44px;height:44px;border-radius:11px;font-size:1.1rem">
-                                            @if($user->photo)
-                                                <img src="{{ asset('storage/users/' . $user->photo) }}" alt="{{ $user->name }}">
-                                            @else
-                                                <i class="bi bi-person-fill"></i>
-                                            @endif
-                                        </div>
-                                        <div>
-                                            <div style="font-weight:700;color:var(--navy)">{{ $user->name }}</div>
-                                            <div style="font-size:0.8rem;color:var(--muted)">{{ $user->email }}</div>
-                                        </div>
-                                    </div>
-                                    <label style="font-size:0.78rem;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:0.5rem">
-                                        Alasan Blokir <span style="color:#e53e3e">*</span>
-                                    </label>
-                                    <textarea name="reason" class="textarea-styled" rows="3"
-                                              placeholder="Contoh: Melanggar ketentuan layanan, spam, penipuan..."
-                                              required></textarea>
-                                    <p style="font-size:0.78rem;color:var(--muted);margin-top:0.5rem;margin-bottom:0">
-                                        <i class="bi bi-info-circle me-1"></i> User yang diblokir tidak dapat login ke akun mereka.
-                                    </p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn-modal-confirm warning">
-                                        <i class="bi bi-shield-lock me-1"></i> Konfirmasi Blokir
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- ── DELETE MODAL ── --}}
-                <button id="deleteTrigger{{ $user->id }}" class="d-none" type="button"
-                        data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}"></button>
-
-                <div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <form action="{{ route('admin.users.delete', $user->id) }}" method="POST">
-                                @csrf @method('DELETE')
-                                <div class="modal-header">
-                                    <h5 class="modal-title">
-                                        <i class="bi bi-trash3 me-2" style="color:#e53e3e"></i>Hapus User
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="detail-user-card" style="margin-bottom:1rem">
-                                        <div class="detail-avatar" style="width:44px;height:44px;border-radius:11px;font-size:1.1rem">
-                                            @if($user->photo)
-                                                <img src="{{ asset('storage/users/' . $user->photo) }}" alt="{{ $user->name }}">
-                                            @else
-                                                <i class="bi bi-person-fill"></i>
-                                            @endif
-                                        </div>
-                                        <div>
-                                            <div style="font-weight:700;color:var(--navy)">{{ $user->name }}</div>
-                                            <div style="font-size:0.8rem;color:var(--muted)">{{ $user->email }} · {{ ucfirst($user->role) }}</div>
-                                        </div>
-                                    </div>
-                                    <div style="background:#fff5f5;border:1.5px solid #fed7d7;border-radius:10px;padding:0.9rem 1rem;display:flex;gap:0.75rem;align-items:flex-start">
-                                        <i class="bi bi-exclamation-triangle-fill" style="color:#e53e3e;flex-shrink:0;margin-top:0.1rem"></i>
-                                        <div>
-                                            <div style="font-size:0.85rem;font-weight:700;color:#9b2c2c;margin-bottom:0.25rem">Tindakan ini tidak dapat dibatalkan</div>
-                                            <div style="font-size:0.8rem;color:#c53030;line-height:1.5">
-                                                Menghapus user akan menghapus semua data terkait termasuk produk, pesanan, dan riwayat transaksi.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Batal</button>
-                                    <button type="submit" class="btn-modal-confirm danger">
-                                        <i class="bi bi-trash3 me-1"></i> Ya, Hapus Permanen
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
                 @empty
                 <tr>
                     <td colspan="8">
@@ -943,80 +689,154 @@
         </table>
     </div>
 
-    {{-- Pagination --}}
+    {{-- Mobile List --}}
+    <div class="user-mobile-list">
+        @forelse($users as $index => $user)
+            <div class="user-card-mob">
+                <div class="user-card-header">
+                    <div class="user-avatar">
+                        @if($user->photo)
+                            <img src="{{ asset('storage/users/' . $user->photo) }}">
+                        @else
+                            <i class="bi bi-person-fill"></i>
+                        @endif
+                    </div>
+                    <div>
+                        <div class="user-name">{{ $user->name }}</div>
+                        <div class="user-joined">ID #{{ $user->id }}</div>
+                    </div>
+                    <div class="ms-auto">
+                         <span class="badge-role {{ $user->role }} small">{{ ucfirst($user->role) }}</span>
+                    </div>
+                </div>
+                <div class="user-card-body">
+                    <div class="user-card-field">
+                        <span class="user-card-label">Email</span>
+                        <span>{{ $user->email }}</span>
+                    </div>
+                    <div class="user-card-field">
+                        <span class="user-card-label">Status</span>
+                        @if(isset($user->is_blocked) && $user->is_blocked)
+                            <span class="text-danger fw-bold">Diblokir</span>
+                        @else
+                            <span class="text-success fw-bold">Aktif</span>
+                        @endif
+                    </div>
+                    <div class="mt-3 d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-navy flex-grow-1" data-bs-toggle="modal" data-bs-target="#detailModal{{ $user->id }}">
+                            <i class="bi bi-eye"></i> Detail
+                        </button>
+                        @if($user->role != 'admin')
+                            <button class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="empty-state">
+                <i class="bi bi-people"></i>
+                <p>Tidak ada user ditemukan</p>
+            </div>
+        @endforelse
+    </div>
+
+    {{-- Modals Loop --}}
+    @foreach($users as $user)
+        {{-- Detail Modal --}}
+        <div class="modal fade" id="detailModal{{ $user->id }}" tabindex="-1">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detail User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="detail-user-card">
+                            <div class="detail-avatar">
+                                @if($user->photo) <img src="{{ asset('storage/users/' . $user->photo) }}"> @else <i class="bi bi-person-fill"></i> @endif
+                            </div>
+                            <div>
+                                <div class="h5 mb-1">{{ $user->name }}</div>
+                                <span class="badge-role {{ $user->role }}">{{ ucfirst($user->role) }}</span>
+                            </div>
+                        </div>
+                        <div class="detail-info-grid">
+                            <div class="detail-field"><label>Email</label><p>{{ $user->email }}</p></div>
+                            <div class="detail-field"><label>Phone</label><p>{{ $user->phone ?? '—' }}</p></div>
+                            <div class="detail-field" style="grid-column: span 2"><label>Alamat</label><p>{{ $user->address ?? '—' }}</p></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button id="blockTrigger{{ $user->id }}" class="d-none" type="button" data-bs-toggle="modal" data-bs-target="#blockModal{{ $user->id }}"></button>
+        <div class="modal fade" id="blockModal{{ $user->id }}" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="{{ route('admin.users.block', $user->id) }}" method="POST">
+                        @csrf @method('PUT')
+                        <input type="hidden" name="action" value="block">
+                        <div class="modal-header"><h5 class="modal-title">Blokir User</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                        <div class="modal-body">
+                            <label class="mb-2">Alasan Blokir *</label>
+                            <textarea name="reason" class="textarea-styled" rows="3" required placeholder="Berikan alasan..."></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn-modal-confirm warning">Blokir</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <button id="deleteTrigger{{ $user->id }}" class="d-none" type="button" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}"></button>
+        <div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form action="{{ route('admin.users.delete', $user->id) }}" method="POST">
+                        @csrf @method('DELETE')
+                        <div class="modal-header"><h5 class="modal-title">Hapus User</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                        <div class="modal-body"><p>Apakah Anda yakin ingin menghapus user <strong>{{ $user->name }}</strong>? Data produk dan pesanan terkait akan ikut terhapus.</p></div>
+                        <div class="modal-footer"><button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Batal</button><button type="submit" class="btn-modal-confirm danger">Ya, Hapus</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+
     <div class="pagination-wrap">
-        <span class="pagination-info">
-            Menampilkan {{ $users->firstItem() }}–{{ $users->lastItem() }} dari {{ $users->total() }} user
-        </span>
+        <span class="pagination-info">Menampilkan {{ $users->firstItem() }}–{{ $users->lastItem() }} dari {{ $users->total() }} user</span>
         {{ $users->withQueryString()->links() }}
     </div>
 </div>
 
-{{-- ── MODAL TAMBAH USER ── --}}
+{{-- MODAL TAMBAH USER --}}
 <div class="modal fade add-user-modal" id="addUserModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.users.store') }}" method="POST">
                 @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="bi bi-person-plus me-2" style="color:var(--navy)"></i>Tambah User Baru
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                <div class="modal-header"><h5 class="modal-title">Tambah User Baru</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
                 <div class="modal-body">
                     <div class="row g-3">
-                        <div class="col-md-12">
-                            <label>Nama Lengkap <span class="required-star">*</span></label>
-                            <input type="text" name="name" class="form-control" required>
-                        </div>
-                        
-                        <div class="col-md-12">
-                            <label>Email <span class="required-star">*</span></label>
-                            <input type="email" name="email" class="form-control" required>
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <label>Password <span class="required-star">*</span></label>
-                            <input type="password" name="password" class="form-control" required>
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <label>Konfirmasi Password <span class="required-star">*</span></label>
-                            <input type="password" name="password_confirmation" class="form-control" required>
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <label>Nomor Telepon</label>
-                            <input type="text" name="phone" class="form-control">
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <label>Role <span class="required-star">*</span></label>
-                            <select name="role" class="form-select" required>
-                                <option value="buyer">Buyer</option>
-                                <option value="seller">Seller</option>
-                                <option value="admin">Admin</option>
-                            </select>
-                        </div>
-                        
-                        <div class="col-md-12">
-                            <label>Alamat</label>
-                            <textarea name="address" class="form-control" rows="2"></textarea>
-                        </div>
-                        
-                        <div class="col-md-12">
-                            <label>Foto Profil</label>
-                            <input type="file" name="photo" class="form-control" accept="image/*">
-                            <small class="text-muted">Format: JPG, PNG. Maks: 2MB</small>
-                        </div>
+                        <div class="col-12"><label>Nama Lengkap *</label><input type="text" name="name" class="form-control" required></div>
+                        <div class="col-12"><label>Email *</label><input type="email" name="email" class="form-control" required></div>
+                        <div class="col-6"><label>Password *</label><input type="password" name="password" class="form-control" required></div>
+                        <div class="col-6"><label>Konfirmasi Password *</label><input type="password" name="password_confirmation" class="form-control" required></div>
+                        <div class="col-6"><label>Role *</label><select name="role" class="form-select"><option value="buyer">Buyer</option><option value="seller">Seller</option><option value="admin">Admin</option></select></div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn-modal-confirm">
-                        <i class="bi bi-save"></i> Simpan User
-                    </button>
+                    <button type="submit" class="btn-modal-confirm">Simpan</button>
                 </div>
             </form>
         </div>

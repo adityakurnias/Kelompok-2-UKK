@@ -305,6 +305,27 @@
     }
 
     .pagination-info { font-size: 0.8rem; color: var(--muted); }
+
+    /* ── MOBILE CARD LIST ── */
+    .order-mobile-list { display: none; }
+    .order-card-mob {
+        background: white;
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        padding: 1rem;
+        margin: 1rem;
+    }
+    .order-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+    .order-card-body { font-size: 0.85rem; }
+    .order-card-field { display: flex; justify-content: space-between; margin-bottom: 0.4rem; border-bottom: 1px dashed var(--border); padding-bottom: 0.3rem; }
+    .order-card-label { color: var(--muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; }
+
+    @media (max-width: 991px) {
+        .orders-table-container { display: none; }
+        .order-mobile-list { display: block; }
+        .filter-bar { padding: 1rem; }
+        .table-card-header { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+    }
 </style>
 @endpush
 
@@ -400,8 +421,8 @@
         </h6>
     </div>
 
-    <div style="overflow-x:auto">
-        <table class="orders-table">
+    <div class="orders-table-container">
+        <table class="orders-table" style="width:100%; overflow-x:auto;">
             <thead>
                 <tr>
                     <th style="width:40px">#</th>
@@ -418,53 +439,36 @@
                 @forelse($orders as $index => $order)
                 <tr>
                     <td style="color:var(--muted);font-size:0.8rem">{{ $orders->firstItem() + $index }}</td>
-
                     <td><span class="order-num">#{{ $order->order_number }}</span></td>
-
                     <td>
                         <div class="buyer-name">{{ $order->buyer->name }}</div>
                         <div class="buyer-email">{{ $order->buyer->email }}</div>
                     </td>
-
+                    <td><span class="price-val">Rp {{ number_format($order->total_price, 0, ',', '.') }}</span></td>
                     <td>
-                        <span class="price-val">Rp {{ number_format($order->total_price, 0, ',', '.') }}</span>
+                        <span class="badge-payment {{ $order->payment_method == 'transfer_bank' ? 'transfer' : 'cod' }}">
+                            {{ $order->payment_method == 'transfer_bank' ? 'Transfer' : 'COD' }}
+                        </span>
                     </td>
-
-                    <td>
-                        @if($order->payment_method == 'transfer_bank')
-                            <span class="badge-payment transfer"><i class="bi bi-bank"></i> Transfer</span>
-                        @else
-                            <span class="badge-payment cod"><i class="bi bi-cash"></i> COD</span>
-                        @endif
-                    </td>
-
                     <td>
                         @switch($order->status)
                             @case('pending')
-                                <span class="badge-status pending"><span class="dot"></span> Pending</span>
-                                @break
+                                <span class="badge-status pending"><span class="dot"></span> Pending</span> @break
                             @case('confirmed')
-                                <span class="badge-status confirmed"><span class="dot"></span> Confirmed</span>
-                                @break
+                                <span class="badge-status confirmed"><span class="dot"></span> Confirmed</span> @break
                             @case('shipped')
-                                <span class="badge-status shipped"><span class="dot"></span> Shipped</span>
-                                @break
+                                <span class="badge-status shipped"><span class="dot"></span> Shipped</span> @break
                             @case('completed')
-                                <span class="badge-status completed"><span class="dot"></span> Completed</span>
-                                @break
+                                <span class="badge-status completed"><span class="dot"></span> Completed</span> @break
                             @case('cancelled')
-                                <span class="badge-status cancelled"><span class="dot"></span> Cancelled</span>
-                                @break
+                                <span class="badge-status cancelled"><span class="dot"></span> Cancelled</span> @break
                         @endswitch
                     </td>
-
                     <td>
                         <span style="font-size:0.8rem;color:var(--muted)">
-                            {{ $order->created_at->format('d M Y') }}<br>
-                            <span style="font-size:0.72rem">{{ $order->created_at->format('H:i') }}</span>
+                            {{ $order->created_at->format('d/m/y') }}
                         </span>
                     </td>
-
                     <td>
                         <a href="{{ route('admin.orders.detail', $order->id) }}" class="btn-detail">
                             <i class="bi bi-eye"></i> Detail
@@ -483,6 +487,57 @@
                 @endforelse
             </tbody>
         </table>
+    </div>
+
+    {{-- Mobile List --}}
+    <div class="order-mobile-list">
+        @forelse($orders as $index => $order)
+            <div class="order-card-mob">
+                <div class="order-card-header">
+                    <span class="order-num">#{{ $order->order_number }}</span>
+                    @switch($order->status)
+                         @case('pending')
+                             <span class="badge bg-warning text-dark small" style="font-size:0.6rem">PENDING</span> @break
+                         @case('confirmed')
+                             <span class="badge bg-info small" style="font-size:0.6rem">CONFIRMED</span> @break
+                         @case('shipped')
+                             <span class="badge bg-primary small" style="font-size:0.6rem">SHIPPED</span> @break
+                         @case('completed')
+                             <span class="badge bg-success small" style="font-size:0.6rem">COMPLETED</span> @break
+                         @case('cancelled')
+                             <span class="badge bg-danger small" style="font-size:0.6rem">CANCELLED</span> @break
+                    @endswitch
+                </div>
+                <div class="order-card-body">
+                    <div class="order-card-field">
+                        <span class="order-card-label">Pembeli</span>
+                        <span class="text-truncate">{{ $order->buyer->name }}</span>
+                    </div>
+                    <div class="order-card-field">
+                        <span class="order-card-label">Total</span>
+                        <span class="price-val">Rp {{ number_format($order->total_price, 0, ',', '.') }}</span>
+                    </div>
+                    <div class="order-card-field">
+                        <span class="order-card-label">Metode</span>
+                        <span>{{ $order->payment_method == 'transfer_bank' ? 'Transfer' : 'COD' }}</span>
+                    </div>
+                    <div class="order-card-field">
+                        <span class="order-card-label">Tanggal</span>
+                        <span>{{ $order->created_at->format('d/m/y') }}</span>
+                    </div>
+                    <div class="mt-3">
+                        <a href="{{ route('admin.orders.detail', $order->id) }}" class="btn btn-sm btn-outline-navy w-100">
+                             <i class="bi bi-eye"></i> Detail Pesanan
+                        </a>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="empty-state">
+                <i class="bi bi-cart-x"></i>
+                <p>Tidak ada pesanan ditemukan</p>
+            </div>
+        @endforelse
     </div>
 
     <div class="pagination-wrap">
