@@ -47,25 +47,40 @@
                     </div>
 
                     <!-- Actions -->
-                    <div class="flex items-center space-x-6">
+                    <div class="flex items-center space-x-3 sm:space-x-4">
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="text-sm font-semibold text-gray-600 hover:text-blue-600 transition-colors">Dashboard</a>
+                            @if(auth()->user()->role === 'admin')
+                                <a href="{{ route('admin.dashboard') }}" class="bg-gray-50 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-gray-700 hover:text-blue-600 hover:bg-blue-50 border border-gray-100 transition-all shadow-sm">Dashboard</a>
+                            @else
+                                <a href="{{ route('dashboard') }}" class="bg-gray-50 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-gray-700 hover:text-blue-600 hover:bg-blue-50 border border-gray-100 transition-all shadow-sm">Dashboard</a>
+                            @endif
+                            <form method="POST" action="{{ route('logout') }}" class="inline m-0">
+                                @csrf
+                                <button type="submit" class="bg-red-50/80 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-red-600 hover:text-red-700 hover:bg-red-100 border border-red-100 transition-all shadow-sm">Keluar</button>
+                            </form>
                         @else
-                            <a href="{{ route('login') }}" class="text-sm font-semibold text-gray-600 hover:text-blue-600 transition-colors">Masuk</a>
-                            <a href="{{ route('register') }}" class="hidden sm:block text-sm font-bold bg-blue-600 text-white px-5 py-2.5 rounded-xl shadow-lg shadow-blue-500/20 hover:bg-blue-700 hover:-translate-y-0.5 transition-all active:scale-95">Daftar</a>
+                            <a href="{{ route('login') }}" class="bg-gray-50 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold text-gray-700 hover:text-blue-600 hover:bg-blue-50 border border-gray-100 transition-all shadow-sm">Masuk</a>
+                            <a href="{{ route('register') }}" class="text-xs sm:text-sm font-bold bg-blue-600 text-white px-3.5 py-2 rounded-xl shadow-sm shadow-blue-500/20 hover:bg-blue-700 hover:-translate-y-0.5 transition-all">Daftar</a>
                         @endauth
 
-                        <a href="{{ route('cart.index') }}" class="relative group">
-                            <div class="bg-gray-50 p-3 rounded-2xl group-hover:bg-blue-50 transition-colors">
-                                <svg class="h-5 w-5 text-gray-600 group-hover:text-blue-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <a href="{{ route('cart.index') }}" class="relative group block">
+                            <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-100 group-hover:bg-blue-50 group-hover:border-blue-100 transition-all shadow-sm group-hover:-translate-y-0.5">
+                                <svg class="h-4 w-4 sm:h-5 sm:w-5 text-gray-600 group-hover:text-blue-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                                 </svg>
                             </div>
-                            <span class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full border-2 border-white">
+                            <span class="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm">
                                 {{ count(session('cart', [])) }}
                             </span>
                         </a>
                     </div>
+                </div>
+                <!-- Mobile Search Bar -->
+                <div class="md:hidden pb-4">
+                    <form action="{{ route('home') }}" method="GET" class="relative group">
+                        <input type="text" name="search" value="{{ request('search') }}" class="w-full bg-gray-50 border border-gray-100 rounded-2xl py-2.5 px-10 text-sm focus:bg-white focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all" placeholder="Cari produk...">
+                        <svg class="absolute left-3.5 top-3 h-4 w-4 text-gray-400 group-focus-within:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                    </form>
                 </div>
             </div>
         </nav>

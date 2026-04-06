@@ -14,7 +14,8 @@
 </div>
 
 <div class="bg-white rounded-[3rem] border border-gray-100 shadow-sm overflow-hidden">
-    <table class="w-full text-left border-collapse">
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse min-w-[800px]">
         <thead class="bg-gray-50 divide-y divide-gray-100">
             <tr>
                 <th class="px-8 py-6 text-[10px] font-black uppercase tracking-widest text-gray-400">Stationery</th>
@@ -75,7 +76,8 @@
                 </tr>
             @endforeach
         </tbody>
-    </table>
+        </table>
+    </div>
 </div>
 
 <div class="mt-8">
