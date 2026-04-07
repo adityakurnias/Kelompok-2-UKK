@@ -90,6 +90,7 @@
                                             </div>
                                         @endif
 
+                                        @if(auth()->check() && strtolower(auth()->user()->role) === 'admin')
                                         <div class="absolute inset-0 bg-black/20 opacity-0 admin-overlay transition-opacity duration-300 flex items-center justify-center gap-3">
                                             <a href="{{ route('admin.products.edit', $product->id) }}" 
                                                class="admin-button bg-white text-[#78350f] p-3 rounded-xl shadow-xl hover:bg-[#78350f] hover:text-white">
@@ -104,6 +105,7 @@
                                                 </button>
                                             </form>
                                         </div>
+                                        @endif
 
                                         <div class="absolute top-4 left-4 flex flex-wrap gap-1 pointer-events-none">
                                             @foreach($product->categories as $cat)

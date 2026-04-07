@@ -45,7 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
         // --- 3. AREA KHUSUS ADMIN ---
-        Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+        Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
 
             // Dashboard Admin (Cek role langsung di dalam fungsi)
             Route::get('/dashboard', function () {
