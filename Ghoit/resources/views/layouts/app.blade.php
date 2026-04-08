@@ -32,5 +32,17 @@
                 {{ $slot }}
             </main>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        @if (session('login_success'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Login Berhasil',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            </script>
+        @endif
     </body>
 </html>

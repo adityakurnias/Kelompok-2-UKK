@@ -14,6 +14,10 @@ class Transaction extends Model
         'shipping_phone',
         'shipping_email',
         'shipping_address',
+        'payment_method',
+        'payment_proof',
+        'refund_status',
+        'refund_reason',
     ];
 
     public function user()

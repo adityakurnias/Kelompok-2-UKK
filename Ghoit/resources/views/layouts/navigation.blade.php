@@ -20,6 +20,9 @@
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('My Orders') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('history')" :active="request()->routeIs('history')">
+                            {{ __('Riwayat') }}
+                        </x-nav-link>
                     @endif
 
                     @if(auth()->user()->role === 'admin')
@@ -86,6 +89,9 @@
             @if(auth()->user()->role === 'buyer')
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('My Orders') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('history')" :active="request()->routeIs('history')">
+                    {{ __('Riwayat') }}
                 </x-responsive-nav-link>
             @endif
 

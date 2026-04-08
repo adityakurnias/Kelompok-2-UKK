@@ -59,6 +59,34 @@
                                     class="w-full bg-white border-gray-100 rounded-2xl py-4 px-6 text-sm font-bold focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all resize-none">{{ old('shipping_address') }}</textarea>
                                 @error('shipping_address') <p class="text-red-500 text-xs mt-2 font-bold">{{ $message }}</p> @enderror
                             </div>
+
+                            <div>
+                                <label class="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-3 block">Metode Pembayaran</label>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <label class="flex items-center p-3 sm:p-4 bg-white border border-gray-100 rounded-2xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all">
+                                        <input type="radio" name="payment_method" value="Transfer Bank" class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded-full" required checked>
+                                        <div class="ml-3">
+                                            <span class="block text-sm font-bold text-gray-900">Transfer Bank</span>
+                                            <span class="block text-[10px] font-medium text-gray-500 leading-tight mt-0.5">Transfer manual ATM/Bank</span>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-center p-3 sm:p-4 bg-white border border-gray-100 rounded-2xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all">
+                                        <input type="radio" name="payment_method" value="QRIS" class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded-full" required>
+                                        <div class="ml-3">
+                                            <span class="block text-sm font-bold text-gray-900">QRIS</span>
+                                            <span class="block text-[10px] font-medium text-gray-500 leading-tight mt-0.5">Aplikasi E-Wallet / M-banking</span>
+                                        </div>
+                                    </label>
+                                    <label class="flex items-center p-3 sm:p-4 bg-white border border-gray-100 rounded-2xl cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition-all">
+                                        <input type="radio" name="payment_method" value="COD" class="w-4 h-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded-full" required>
+                                        <div class="ml-3">
+                                            <span class="block text-sm font-bold text-gray-900">Bayar di Tempat</span>
+                                            <span class="block text-[10px] font-medium text-gray-500 leading-tight mt-0.5">Cash on Delivery (COD)</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                @error('payment_method') <p class="text-red-500 text-xs mt-2 font-bold">{{ $message }}</p> @enderror
+                            </div>
                         </div>
 
                         <div class="pt-6">

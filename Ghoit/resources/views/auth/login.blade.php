@@ -52,4 +52,17 @@
             <p class="text-sm text-gray-500">Belum punya akun? <a href="{{ route('register') }}" class="font-bold text-blue-600 hover:underline decoration-2 underline-offset-4">Buat akun baru</a></p>
         </div>
     </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if ($errors->any())
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Login Anda Gagal',
+                text: 'Kredensial yang Anda masukkan salah atau email belum terdaftar.',
+                confirmButtonColor: '#ef4444',
+                confirmButtonText: 'Coba Lagi'
+            });
+        </script>
+    @endif
 </x-guest-layout>

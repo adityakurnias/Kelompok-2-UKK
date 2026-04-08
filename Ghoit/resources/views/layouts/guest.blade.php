@@ -17,9 +17,20 @@
     <body class="font-sans text-gray-900 antialiased bg-[#fdfdfd]">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
             <div class="mb-4">
+                <style>
+                    @keyframes rgbGlow {
+                        0% { color: #ff0000; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
+                        33% { color: #00ff00; text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00; }
+                        66% { color: #0000ff; text-shadow: 0 0 10px #0000ff, 0 0 20px #0000ff; }
+                        100% { color: #ff0000; text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000; }
+                    }
+                    .rgb-glow-text {
+                        animation: rgbGlow 3s infinite linear;
+                    }
+                </style>
                 <a href="/" class="flex flex-col items-center">
-                    <span class="text-3xl font-bold tracking-tighter text-blue-900 italic">ATK<span class="text-blue-500">Store</span></span>
-                    <div class="h-1 w-12 bg-blue-500 mt-1 rounded-full"></div>
+                    <span class="text-4xl font-black tracking-tighter italic rgb-glow-text">ATK<span class="opacity-90">Ghoits</span></span>
+                    <div class="h-1 w-16 bg-gradient-to-r from-red-500 via-green-500 to-blue-500 mt-2 rounded-full animate-pulse"></div>
                 </a>
             </div>
 

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Toko ATK - Peralatan Kantor Premium Anda</title>
+        <title>Toko ATK Ghoits - Peralatan Kantor Premium Anda</title>
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +29,7 @@
                     <!-- Logo -->
                     <div class="flex-shrink-0 flex items-center">
                         <a href="{{ route('home') }}" class="flex flex-col">
-                            <span class="text-2xl font-extrabold tracking-tighter text-blue-900 leading-none">ATK<span class="text-blue-500">Store</span></span>
+                            <span class="text-2xl font-extrabold tracking-tighter text-blue-900 leading-none"><span class="rgb-glow-text">ATK Ghoits</span></span>
                             <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mt-1">Kualitas Premium</span>
                         </a>
                     </div>
@@ -125,30 +125,31 @@
                 @forelse($products as $product)
                     <div class="group relative bg-white rounded-[2rem] border border-gray-100/60 p-5 hover:shadow-2xl hover:shadow-gray-200/50 hover:-translate-y-2 transition-all duration-300">
                         <!-- Product Image -->
-                        <div class="aspect-square bg-gray-50 rounded-[1.5rem] mb-6 overflow-hidden relative">
-                             @if($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                             @else
-                                <div class="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50">
-                                    <svg class="w-12 h-12 text-blue-100 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
-                                    <span class="text-[8px] font-black uppercase tracking-widest text-blue-200">Foto Segera Hadir</span>
-                                </div>
-                             @endif
+                        <a href="{{ route('product.show', $product->id) }}" class="block">
+                            <div class="aspect-square bg-gray-50 rounded-[1.5rem] mb-4 overflow-hidden relative">
+                                 @if($product->image)
+                                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                 @else
+                                    <div class="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50">
+                                        <svg class="w-12 h-12 text-blue-100 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                        <span class="text-[8px] font-black uppercase tracking-widest text-blue-200">Foto Segera Hadir</span>
+                                    </div>
+                                 @endif
 
-                             <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-blue-600 shadow-sm">
-                                {{ $product->category->name }}
-                             </div>
-                        </div>
+                                 <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest text-blue-600 shadow-sm">
+                                    {{ $product->category->name }}
+                                 </div>
+                            </div>
+                        </a>
 
                         <div class="px-2">
-                            <h3 class="text-lg font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors">{{ $product->name }}</h3>
-                            <p class="mt-2 text-sm text-gray-400 line-clamp-2 leading-relaxed">
-                                {{ $product->description }}
-                            </p>
+                            <a href="{{ route('product.show', $product->id) }}" class="block">
+                                <h3 class="text-lg font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors line-clamp-1">{{ $product->name }}</h3>
+                            </a>
 
-                            <div class="mt-6 flex items-center justify-between">
+                            <div class="mt-4 flex items-center justify-between">
                                 <div class="flex flex-col">
                                     <span class="text-[9px] font-black text-gray-400 uppercase tracking-tighter mb-1">Harga</span>
                                     <span class="text-xl font-black text-blue-600 tracking-tighter">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
@@ -161,12 +162,9 @@
                                 </div>
                             </div>
 
-                            <form action="{{ route('cart.add', $product->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="mt-8 w-full py-4 bg-gray-900 text-white rounded-2xl font-bold tracking-tight hover:bg-blue-600 hover:shadow-xl hover:shadow-blue-500/30 transition-all active:scale-[0.98]">
-                                    Tambah ke Keranjang
-                                </button>
-                            </form>
+                            <a href="{{ route('product.show', $product->id) }}" class="mt-6 block w-full py-3 text-center border-2 border-gray-100 text-gray-700 rounded-2xl font-bold tracking-tight hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:shadow-xl hover:shadow-blue-500/30 transition-all active:scale-[0.98]">
+                                Lihat Detail
+                            </a>
                         </div>
                     </div>
                 @empty
@@ -193,10 +191,10 @@
         <footer class="bg-white border-t border-gray-100 py-16">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
                 <div class="flex flex-col items-center mb-8">
-                    <span class="text-2xl font-extrabold tracking-tighter text-blue-900 leading-none text-center">ATK<span class="text-blue-500">Store</span></span>
+                    <span class="text-2xl font-extrabold tracking-tighter text-blue-900 leading-none text-center"><span class="rgb-glow-text">ATK Ghoits</span></span>
                     <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 mt-2">Peralatan Kantor Premium</span>
                 </div>
-                <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">© {{ date('Y') }} ATK Store Indonesia. Melayani dengan Sepenuh Hati.</p>
+                <p class="text-xs text-gray-400 font-bold uppercase tracking-widest">© {{ date('Y') }} ATK Ghoits Indonesia. Melayani dengan Sepenuh Hati.</p>
             </div>
         </footer>
     </body>
