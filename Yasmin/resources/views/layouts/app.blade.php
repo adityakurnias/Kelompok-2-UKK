@@ -182,9 +182,10 @@
             top: -4px;
             right: -4px;
             background: #e53e3e;
-            font-size: 0.6rem;
-            padding: 2px 5px;
+            font-size: 0.65rem;
+            padding: 2px 6px;
             border: 2px solid white;
+            font-weight: 800;
         }
 
         /* ── OFFCANVAS ── */
@@ -239,13 +240,21 @@
         }
 
         @media (max-width: 768px) {
-            body { padding-bottom: 70px; } /* Space for bottom nav */
+            body { padding-bottom: 75px; } /* Space for bottom nav */
             .mobile-bottom-nav { display: flex; }
             .nav-actions .nav-link-item:not(.btn-nav-accent) { display: none; }
             .search-wrap { display: none; }
-            .page-header h1 { font-size: 1.6rem; }
-            footer { padding: 3rem 0 6rem; text-align: center; } /* More bottom padding for nav */
+            .page-header h1 { font-size: 1.5rem; }
+            .btn-outline-navy, .btn-navy { padding: 0.5rem 1rem; font-size: 0.85rem; }
+            footer { padding: 3rem 0 6rem; text-align: center; }
             .footer-socials { justify-content: center; margin-bottom: 2rem; }
+        }
+
+        /* X-Small screens */
+        @media (max-width: 480px) {
+            .navbar-brand { font-size: 1.15rem; }
+            .mobile-nav-item span { font-size: 0.62rem; }
+            .mobile-nav-item i { font-size: 1.15rem; }
         }
 
         /* Page header */
@@ -288,6 +297,28 @@
             box-shadow: 0 4px 12px rgba(15,36,68,0.15);
         }
 
+        .btn-outline-navy {
+            border: 1.5px solid var(--navy) !important;
+            color: var(--navy) !important;
+            background: transparent !important;
+            border-radius: 8px;
+            padding: 0.6rem 1.25rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-outline-navy:hover {
+            background: var(--navy) !important;
+            color: white !important;
+            transform: translateY(-1px);
+        }
+
         /* ── PRODUCT CARD ── */
         .card-product {
             background: white;
@@ -309,9 +340,13 @@
 
         .card-product img {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: cover;
             transition: transform 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .card-product img { height: 160px; }
         }
 
         .card-product:hover img {

@@ -13,15 +13,20 @@ use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $cartItems = Cart::where('user_id', Auth::id())
-                        ->with('product.user')
-                        ->get();
+        $query = Cart::where('user_id', Auth::id())
+                     ->with('product.user');
+        
+        if ($request->has('selected_items')) {
+            $query->whereIn('id', $request->selected_items);
+        }
+        
+        $cartItems = $query->get();
         
         if ($cartItems->isEmpty()) {
             return redirect()->route('cart.index')
-                ->with('error', 'Keranjang belanja kosong');
+                ->with('error', 'Silahkan pilih minimal satu produk untuk di-checkout');
         }
         
         $subtotal = $cartItems->sum(function($item) {
@@ -34,18 +39,23 @@ class CheckoutController extends Controller
     public function process(Request $request)
     {
         $request->validate([
+            'buyer_name' => 'required|string|max:255',
+            'buyer_email' => 'required|email|max:255',
             'shipping_address' => 'required|string',
             'payment_method' => 'required|in:transfer_bank,cod',
-            'payment_proof' => 'required_if:payment_method,transfer_bank|image|mimes:jpeg,png,jpg|max:2048'
+            'payment_proof' => 'required_if:payment_method,transfer_bank|image|mimes:jpeg,png,jpg|max:2048',
+            'selected_items' => 'required|array',
+            'selected_items.*' => 'exists:carts,id'
         ]);
         
         $cartItems = Cart::where('user_id', Auth::id())
+                        ->whereIn('id', $request->selected_items)
                         ->with('product.user')
                         ->get();
         
         if ($cartItems->isEmpty()) {
             return redirect()->route('cart.index')
-                ->with('error', 'Keranjang belanja kosong');
+                ->with('error', 'Produk pilihan tidak ditemukan atau sudah diproses');
         }
         
         DB::beginTransaction();
@@ -93,8 +103,10 @@ class CheckoutController extends Controller
                 // $item->product->update(['status' => 'terjual']);
             }
             
-            // Hapus keranjang
-            Cart::where('user_id', Auth::id())->delete();
+            // Hapus item pilihan dari keranjang
+            Cart::where('user_id', Auth::id())
+                ->whereIn('id', $request->selected_items)
+                ->delete();
             
             DB::commit();
             

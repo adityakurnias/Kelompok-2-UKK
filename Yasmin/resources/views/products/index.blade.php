@@ -92,12 +92,16 @@
                 </div>
             @endif
             
-            <div class="row">
+            <div class="row g-3 g-md-4">
                 @forelse($products as $product)
-                <div class="col-md-4 col-6 mb-4">
+                <div class="col-6 col-md-4 col-lg-3">
                     <div class="card-product">
                         <div class="position-relative overflow-hidden">
-                            <img src="{{ asset('storage/products/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}">
+                            @if(Str::startsWith($product->image, 'http'))
+                                <img src="{{ $product->image }}" class="card-img-top" alt="{{ $product->name }}">
+                            @else
+                                <img src="{{ asset('storage/products/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}">
+                            @endif
                             <span class="badge-condition">
                                 {{ $product->condition == 'baru' ? 'Baru' : ($product->condition == 'seperti_baru' ? 'Spt Baru' : 'Bekas') }}
                             </span>
@@ -105,11 +109,19 @@
                         <div class="card-body">
                             <h6 class="card-title">{{ Str::limit($product->name, 45) }}</h6>
                             <p class="price">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                            <div class="seller-info">
+                            <div class="seller-info mb-2 text-muted small">
                                 <span class="seller-name text-truncate">
                                     <i class="bi bi-person-circle"></i> {{ $product->user->name }}
                                 </span>
-                                <a href="{{ route('products.show', $product) }}" class="btn-navy btn-sm" style="padding: 0.25rem 0.65rem; font-size: 0.75rem;">Detail</a>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <form action="{{ route('cart.add', $product->id) }}" method="POST" class="flex-grow-1">
+                                    @csrf
+                                    <button type="submit" class="btn-navy btn-sm w-100" style="font-size: 0.75rem;">
+                                        <i class="bi bi-cart-plus"></i> +Keranjang
+                                    </button>
+                                </form>
+                                <a href="{{ route('products.show', $product) }}" class="btn btn-outline-navy btn-sm" style="font-size: 0.75rem;">Detail</a>
                             </div>
                         </div>
                     </div>

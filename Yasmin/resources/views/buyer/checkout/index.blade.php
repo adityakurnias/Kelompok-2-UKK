@@ -28,6 +28,22 @@
                     <form action="{{ route('checkout.process') }}" method="POST" enctype="multipart/form-data" id="checkoutForm">
                         @csrf
                         
+                        {{-- Hidden inputs for selected items --}}
+                        @foreach($cartItems as $item)
+                            <input type="hidden" name="selected_items[]" value="{{ $item->id }}">
+                        @endforeach
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nama Pembeli <span class="text-danger">*</span></label>
+                                <input type="text" name="buyer_name" class="form-control" value="{{ Auth::user()->name }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Alamat Email <span class="text-danger">*</span></label>
+                                <input type="email" name="buyer_email" class="form-control" value="{{ Auth::user()->email }}" required>
+                            </div>
+                        </div>
+
                         <div class="mb-3">
                             <label class="form-label">Alamat Pengiriman <span class="text-danger">*</span></label>
                             <textarea name="shipping_address" class="form-control @error('shipping_address') is-invalid @enderror" 

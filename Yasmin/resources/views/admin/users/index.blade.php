@@ -507,6 +507,31 @@
         .table-card-header { flex-direction: column; align-items: stretch; }
         .btn-filter { width: 100%; justify-content: center; }
     }
+
+    @media (max-width: 767px) {
+        .filter-group { min-width: 100%; }
+        .filter-group.search-group { min-width: 100%; flex: auto; }
+        .filter-actions { width: 100%; }
+        .filter-actions .btn-filter,
+        .filter-actions .btn-filter-ghost { flex: 1; justify-content: center; }
+        .stats-row { gap: 0.5rem; }
+        .stat-chip { font-size: 0.78rem; padding: 0.5rem 0.85rem; }
+        .user-card-mob { margin: 0.75rem; padding: 0.85rem; }
+        .detail-info-grid { grid-template-columns: 1fr; }
+        .detail-info-grid .detail-field[style*="span 2"] { grid-column: span 1; }
+        .detail-user-card { flex-direction: column; text-align: center; gap: 0.75rem; }
+        .detail-stats { grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; }
+    }
+
+    @media (max-width: 575px) {
+        .stats-row { justify-content: flex-start; }
+        .stat-chip { font-size: 0.75rem; padding: 0.45rem 0.75rem; gap: 0.4rem; }
+        .user-card-mob { margin: 0.5rem; }
+        .user-card-header .user-name { font-size: 0.82rem; }
+        .detail-stats { grid-template-columns: 1fr; }
+        .detail-stat-box .val { font-size: 1.2rem; }
+        .detail-stat-box .lbl { font-size: 0.68rem; }
+    }
 </style>
 @endpush
 

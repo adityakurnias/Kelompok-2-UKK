@@ -343,18 +343,6 @@
         </a>
     </div>
 
-    {{-- ── ALERTS ── --}}
-    @if(session('success'))
-        <div class="alert-success-custom">
-            <i class="bi bi-check-circle-fill"></i> {{ session('success') }}
-        </div>
-    @endif
-
-    @if(session('error'))
-        <div class="alert-error-custom">
-            <i class="bi bi-exclamation-circle-fill"></i> {{ session('error') }}
-        </div>
-    @endif
 
     {{-- ── TABLE ── --}}
     <div class="table-card">
@@ -365,7 +353,7 @@
             </h6>
         </div>
 
-        <div class="d-none d-md-block">
+        <div class="table-responsive">
             <table class="prod-table">
                 <thead>
                     <tr>

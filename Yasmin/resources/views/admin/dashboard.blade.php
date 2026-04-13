@@ -312,13 +312,37 @@
         color: var(--muted);
     }
 
+    @media (max-width: 991px) {
+        .quick-card .quick-desc { font-size: 0.72rem; }
+    }
+
     @media (max-width: 768px) {
         .page-header h1 { font-size: 1.4rem; }
         .stat-value { font-size: 1.75rem; }
+        .stat-card { padding: 1.1rem 1.2rem; }
         .admin-banner { padding: 1.25rem; flex-direction: column; text-align: center; }
         .admin-banner i { font-size: 1.5rem; margin-bottom: 0.5rem; }
         .info-card-header { padding: 0.75rem 1rem; }
-        .info-card-header h6 { font-size: 0.75rem; }
+        .info-card-header h6 { font-size: 0.82rem; }
+        .activity-item { padding: 0.65rem 1rem; gap: 0.6rem; }
+        .activity-text { font-size: 0.78rem; }
+        .activity-time { font-size: 0.7rem; }
+        .request-item { padding: 0.7rem 1rem; }
+    }
+
+    @media (max-width: 575px) {
+        .stat-grid { gap: 0.75rem; }
+        .stat-value { font-size: 1.5rem; }
+        .stat-label { font-size: 0.68rem; }
+        .stat-meta { font-size: 0.72rem; }
+        .stat-icon { width: 42px; height: 42px; font-size: 1.1rem; }
+        .quick-grid { gap: 0.75rem; }
+        .quick-card { padding: 1.1rem 1.15rem; gap: 0.75rem; }
+        .quick-icon { width: 40px; height: 40px; font-size: 1rem; }
+        .quick-label { font-size: 0.82rem; }
+        .quick-desc { font-size: 0.7rem; }
+        .bottom-grid { gap: 0.75rem; }
+        .info-card-header { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
     }
 </style>
 @endpush

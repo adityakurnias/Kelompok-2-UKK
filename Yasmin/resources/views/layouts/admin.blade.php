@@ -338,6 +338,22 @@
             color: white;
         }
 
+        /* Utility Classes */
+        .text-navy { color: var(--navy) !important; }
+        .bg-navy { background-color: var(--navy) !important; }
+        
+        .btn-navy {
+            background-color: var(--navy);
+            color: white;
+            border: none;
+            transition: all 0.2s;
+        }
+        .btn-navy:hover {
+            background-color: var(--navy-mid);
+            color: white;
+            transform: translateY(-1px);
+        }
+
         /* Alerts */
         .alert {
             border: none;
@@ -411,13 +427,111 @@
 
             .topbar {
                 left: 0;
+                padding: 0 1rem;
             }
 
             .main-content {
                 margin-left: 0;
+                padding: 1.5rem 1.25rem 2rem;
             }
 
             .sidebar-toggle { display: block; }
+
+            .page-header h1 { font-size: 1.35rem; }
+            .page-header p { font-size: 0.82rem; }
+
+            .card-admin .card-body-admin { padding: 1.15rem; }
+            .card-admin .card-header-admin { padding: 0.85rem 1.15rem; }
+
+            .table-admin thead th,
+            .table-admin tbody td {
+                padding: 0.65rem 0.75rem;
+                font-size: 0.82rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .main-content {
+                padding: 1.25rem 1rem 2rem;
+            }
+
+            .topbar {
+                padding: 0 0.75rem;
+                gap: 0.5rem;
+            }
+
+            .topbar-title {
+                font-size: 0.95rem;
+            }
+
+            .topbar-email-text {
+                display: none;
+            }
+
+            .topbar-time {
+                font-size: 0.75rem;
+            }
+
+            .page-header {
+                margin-bottom: 1.25rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.25rem;
+            }
+
+            .btn-admin,
+            .btn-admin-ghost {
+                padding: 0.45rem 0.9rem;
+                font-size: 0.8rem;
+            }
+
+            /* Make modals full-width on small screens */
+            .modal-dialog {
+                margin: 0.5rem;
+                max-width: calc(100% - 1rem);
+            }
+
+            .modal-body {
+                padding: 1rem;
+            }
+
+            .modal-header {
+                padding: 1rem;
+            }
+
+            .modal-footer {
+                padding: 0.75rem 1rem;
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 575px) {
+            .main-content {
+                padding: 1rem 0.75rem 1.5rem;
+            }
+
+            .page-header h1 {
+                font-size: 1.15rem;
+            }
+
+            .topbar-divider {
+                display: none;
+            }
+
+            .topbar-time {
+                font-size: 0.72rem;
+            }
+
+            .alert {
+                font-size: 0.8rem;
+                padding: 0.65rem 0.85rem;
+            }
+
+            .badge-status {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.6rem;
+            }
         }
     </style>
     @stack('styles')
@@ -503,7 +617,7 @@
     <div class="topbar-right">
         <span class="topbar-time" id="clock"></span>
         <div class="topbar-divider"></div>
-        <span style="font-size:0.82rem;color:var(--muted)">
+        <span class="topbar-email-text" style="font-size:0.82rem;color:var(--muted)">
             <i class="bi bi-envelope me-1"></i>{{ Auth::user()->email }}
         </span>
     </div>

@@ -12,33 +12,39 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         // Admin
-        User::create([
-            'name' => 'Admin',
-            'email' => 'admin@preloved.com',
-            'password' => Hash::make('password'),
-            'phone' => '08123456789',
-            'address' => 'Jl. Admin No. 1',
-            'role' => 'admin'
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@preloved.com'],
+            [
+                'name' => 'Admin',
+                'password' => Hash::make('password'),
+                'phone' => '08123456789',
+                'address' => 'Jl. Admin No. 1',
+                'role' => 'admin'
+            ]
+        );
 
         // Buyer
-        User::create([
-            'name' => 'Budi Pembeli',
-            'email' => 'budi@email.com',
-            'password' => Hash::make('password'),
-            'phone' => '08123456780',
-            'address' => 'Jl. Pembeli No. 1',
-            'role' => 'buyer'
-        ]);
+        User::updateOrCreate(
+            ['email' => 'budi@email.com'],
+            [
+                'name' => 'Budi Pembeli',
+                'password' => Hash::make('password'),
+                'phone' => '08123456780',
+                'address' => 'Jl. Pembeli No. 1',
+                'role' => 'buyer'
+            ]
+        );
 
         // Seller
-        User::create([
-            'name' => 'Ani Penjual',
-            'email' => 'ani@email.com',
-            'password' => Hash::make('password'),
-            'phone' => '08123456781',
-            'address' => 'Jl. Penjual No. 1',
-            'role' => 'seller'
-        ]);
+        User::updateOrCreate(
+            ['email' => 'ani@email.com'],
+            [
+                'name' => 'Ani Penjual',
+                'password' => Hash::make('password'),
+                'phone' => '08123456781',
+                'address' => 'Jl. Penjual No. 1',
+                'role' => 'seller'
+            ]
+        );
     }
 }

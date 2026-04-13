@@ -170,11 +170,11 @@
             background: var(--soft);
             border: 1.5px solid var(--border);
             border-radius: 14px;
-            padding: 1.1rem 1.25rem;
+            padding: 1.25rem 1.5rem;
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
+            gap: 1.25rem;
+            margin-bottom: 2rem;
         }
 
         .seller-avatar {
@@ -190,18 +190,30 @@
             flex-shrink: 0;
         }
 
+        .seller-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
         .seller-info h6 {
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: var(--navy);
-            margin-bottom: 0.2rem;
+            margin: 0;
         }
 
         .seller-info p {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: var(--muted);
             margin: 0;
             line-height: 1.6;
+        }
+
+        .seller-info i {
+            width: 18px;
+            color: var(--navy);
+            opacity: 0.7;
         }
 
         /* Action Buttons */
@@ -372,20 +384,6 @@
     <div class="detail-wrapper">
         <div class="container">
 
-            {{-- Alert Messages --}}
-            @if(session('success'))
-                <div class="alert-success">
-                    <i class="bi bi-check-circle-fill"></i>
-                    <span>{{ session('success') }}</span>
-                </div>
-            @endif
-
-            @if(session('error'))
-                <div class="alert-danger">
-                    <i class="bi bi-exclamation-triangle-fill"></i>
-                    <span>{{ session('error') }}</span>
-                </div>
-            @endif
 
             {{-- Breadcrumb --}}
             <nav aria-label="breadcrumb">
@@ -402,7 +400,11 @@
                 {{-- Image --}}
                 <div class="col-lg-5">
                     <div class="img-panel">
-                        <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
+                        @if(Str::startsWith($product->image, 'http'))
+                            <img src="{{ $product->image }}" alt="{{ $product->name }}">
+                        @else
+                            <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
+                        @endif
                         <div class="img-panel-footer">
                             <span class="condition-badge">
                                 <i class="bi bi-tag"></i>
@@ -526,7 +528,11 @@
                             <div class="col-lg-3 col-md-4 col-6">
                                 <div class="card-product">
                                     <div class="position-relative overflow-hidden">
-                                        <img src="{{ asset('storage/products/' . $related->image) }}" alt="{{ $related->name }}">
+                                        @if(Str::startsWith($related->image, 'http'))
+                                            <img src="{{ $related->image }}" alt="{{ $related->name }}">
+                                        @else
+                                            <img src="{{ asset('storage/products/' . $related->image) }}" alt="{{ $related->name }}">
+                                        @endif
                                         <span class="badge-condition">
                                             {{ $related->condition == 'baru' ? 'Baru' : ($related->condition == 'seperti_baru' ? 'Spt Baru' : 'Bekas') }}
                                         </span>

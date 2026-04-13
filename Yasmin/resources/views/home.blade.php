@@ -340,6 +340,75 @@
         .seller-cta { padding: 3rem 1.5rem; text-align: center; }
         .seller-steps { justify-content: center; }
     }
+
+    /* ── SELLER CTA ── */
+    .seller-cta {
+        background: var(--navy);
+        border-radius: 24px;
+        padding: 3.5rem;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.1);
+        text-align: left;
+    }
+
+    .seller-cta::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, rgba(232,197,71,0.15) 0%, transparent 70%);
+        pointer-events: none;
+    }
+
+    .seller-cta h4 {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: white;
+    }
+
+    .seller-cta p {
+        color: rgba(255,255,255,0.7);
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .seller-steps {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .seller-step-pill {
+        background: rgba(255,255,255,0.08);
+        border: 1px solid rgba(255,255,255,0.15);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: rgba(255,255,255,0.9);
+    }
+
+    .seller-step-pill .num {
+        width: 20px;
+        height: 20px;
+        background: var(--accent);
+        color: var(--navy);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: 800;
+    }
 </style>
 @endpush
 
@@ -440,12 +509,16 @@
                 </a>
             </div>
         </div>
-        <div class="row g-3">
+        <div class="row g-3 g-md-4">
             @foreach($products as $product)
-            <div class="col-lg-3 col-md-4 col-6">
+            <div class="col-6 col-md-4 col-lg-3">
                 <div class="card-product">
                     <div class="position-relative">
-                        <img src="{{ asset('storage/products/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}">
+                        @if(Str::startsWith($product->image, 'http'))
+                            <img src="{{ $product->image }}" class="card-img-top" alt="{{ $product->name }}">
+                        @else
+                            <img src="{{ asset('storage/products/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}">
+                        @endif
                         <span class="badge-condition">
                             {{ $product->condition == 'baru' ? 'Baru' : ($product->condition == 'seperti_baru' ? 'Seperti Baru' : 'Bekas') }}
                         </span>
@@ -453,9 +526,20 @@
                     <div class="card-body">
                         <p class="card-title">{{ $product->name }}</p>
                         <p class="price">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                        <div class="seller-info">
-                            <span class="seller-name"><i class="bi bi-person-circle me-1"></i>{{ $product->user->name }}</span>
-                            <a href="{{ route('products.show', $product) }}" class="btn-navy" style="font-size:0.78rem;padding:0.35rem 0.85rem;border-radius:6px;text-decoration:none">
+                        <div class="seller-info mb-2">
+                            <span class="seller-name text-truncate">
+                                <i class="bi bi-person-circle me-1"></i>{{ $product->user->name }}
+                            </span>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <form action="{{ route('cart.add', $product->id) }}" method="POST" class="flex-grow-1">
+                                @csrf
+                                <button type="submit" class="btn-navy w-100" style="font-size:0.75rem;padding:0.4rem;border-radius:6px;">
+                                    <i class="bi bi-cart-plus"></i> +Keranjang
+                                </button>
+                            </form>
+                            <a href="{{ route('products.show', $product) }}" class="btn-outline-navy" 
+                               style="font-size:0.75rem;padding:0.4rem 0.7rem;border-radius:6px;text-decoration:none;border:1px solid var(--navy);display:flex;align-items:center;justify-content:center;">
                                 Detail
                             </a>
                         </div>

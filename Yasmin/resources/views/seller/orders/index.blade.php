@@ -8,13 +8,11 @@
         <div class="col-12">
             <h2 class="text-navy mb-4"><i class="bi bi-cart-check"></i> Pesanan Masuk</h2>
             
-            @if(session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
-            @endif
             
             <div class="card">
-                <div class="card-body">
-                    <table class="table table-hover">
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
                         <thead>
                             <tr>
                                 <th>No. Order</th>
@@ -111,11 +109,11 @@
                             </tr>
                             @endforelse
                         </tbody>
-                    </table>
-                    
-                    <div class="d-flex justify-content-center">
-                        {{ $orderItems->links() }}
+                        </table>
                     </div>
+                </div>
+                <div class="card-footer bg-white py-3 d-flex justify-content-center">
+                    {{ $orderItems->links() }}
                 </div>
             </div>
         </div>
