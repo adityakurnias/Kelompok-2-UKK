@@ -18,18 +18,23 @@ class Product extends Model
     // ── ACCESSOR: otomatis fallback ke default jika file tidak ada ──
     public function getImageUrlAttribute(): string
     {
+        // Jika tidak ada data gambar
+        if (empty($this->image)) {
+            return 'https://placehold.co/600x600?text=No+Image';
+        }
+
         // Jika gambar adalah URL eksternal (Unsplash, dll)
         if (str_starts_with($this->image, 'http')) {
             return $this->image;
         }
 
-        // Jika gambar ada di storage lokal
-        if ($this->image && Storage::disk('public')->exists('products/' . $this->image)) {
+        // Jika gambar ada di storage lokal (folder products)
+        if (Storage::disk('public')->exists('products/' . $this->image)) {
             return asset('storage/products/' . $this->image);
         }
-
-        // Fallback default
-        return asset('images/default-product.jpg');
+        
+        // Fallback jika file tidak ditemukan di storage
+        return 'https://placehold.co/600x600?text=Image+Not+Found';
     }
 
     // ── RELATIONS ──

@@ -587,7 +587,7 @@
                     <td>{{ $products->firstItem() + $index }}</td>
                     <td>
                         <div class="product-cell">
-                            <img src="{{ asset('storage/products/' . $product->image) }}" class="product-thumb">
+                            <img src="{{ $product->image_url }}" class="product-thumb">
                             <div>
                                 <div class="product-name" title="{{ $product->name }}">{{ $product->name }}</div>
                                 <div class="product-meta">ID #{{ $product->id }}</div>
@@ -665,7 +665,7 @@
         @forelse($products as $index => $product)
             <div class="prod-card-mob">
                 <div class="prod-card-header">
-                    <img src="{{ asset('storage/products/' . $product->image) }}" class="product-thumb">
+                    <img src="{{ $product->image_url }}" class="product-thumb">
                     <div style="flex:1; min-width:0">
                         <div class="product-name" style="max-width:100%">{{ $product->name }}</div>
                         <div class="product-meta">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
@@ -719,7 +719,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="detail-product-card">
-                            <img src="{{ asset('storage/products/' . $product->image) }}">
+                            <img src="{{ $product->image_url }}">
                             <div>
                                 <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:0.3rem">
                                     {{ $product->name }}

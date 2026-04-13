@@ -82,7 +82,7 @@
                     @foreach($order->items as $item)
                     <div class="row mb-3">
                         <div class="col-md-2">
-                            <img src="{{ asset('storage/products/' . $item->product->image) }}" 
+                            <img src="{{ $item->product->image_url }}" 
                                  class="img-fluid rounded" alt="{{ $item->product->name }}">
                         </div>
                         <div class="col-md-6">
@@ -183,6 +183,28 @@
             
             {{-- Tombol Aksi --}}
             <div class="mt-3 d-grid gap-2">
+                @if($order->status == 'shipped')
+                    <form action="{{ route('orders.confirm-receipt', $order->id) }}" method="POST" class="d-grid">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn btn-success fw-bold py-2" 
+                                onclick="return confirm('Apakah Anda yakin sudah menerima barang dengan baik?')">
+                            <i class="bi bi-check-circle me-1"></i> Konfirmasi Barang Diterima
+                        </button>
+                    </form>
+                @endif
+
+                @if($order->status == 'pending')
+                    <form action="{{ route('orders.cancel', $order->id) }}" method="POST" class="d-grid">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn btn-outline-danger fw-bold" 
+                                onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')">
+                            <i class="bi bi-x-circle me-1"></i> Batalkan Pesanan
+                        </button>
+                    </form>
+                @endif
+
                 <a href="{{ route('orders.index') }}" class="btn btn-outline-navy">
                     <i class="bi bi-arrow-left"></i> Kembali ke Daftar Pesanan
                 </a>

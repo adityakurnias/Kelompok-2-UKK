@@ -400,11 +400,7 @@
                 {{-- Image --}}
                 <div class="col-lg-5">
                     <div class="img-panel">
-                        @if(Str::startsWith($product->image, 'http'))
-                            <img src="{{ $product->image }}" alt="{{ $product->name }}">
-                        @else
-                            <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}">
-                        @endif
+                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
                         <div class="img-panel-footer">
                             <span class="condition-badge">
                                 <i class="bi bi-tag"></i>
@@ -528,11 +524,7 @@
                             <div class="col-lg-3 col-md-4 col-6">
                                 <div class="card-product">
                                     <div class="position-relative overflow-hidden">
-                                        @if(Str::startsWith($related->image, 'http'))
-                                            <img src="{{ $related->image }}" alt="{{ $related->name }}">
-                                        @else
-                                            <img src="{{ asset('storage/products/' . $related->image) }}" alt="{{ $related->name }}">
-                                        @endif
+                                        <img src="{{ $related->image_url }}" alt="{{ $related->name }}">
                                         <span class="badge-condition">
                                             {{ $related->condition == 'baru' ? 'Baru' : ($related->condition == 'seperti_baru' ? 'Spt Baru' : 'Bekas') }}
                                         </span>

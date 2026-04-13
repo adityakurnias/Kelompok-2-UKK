@@ -41,11 +41,7 @@
                             
                             {{-- Image --}}
                             <div class="col-3 col-md-2 text-center">
-                                @if(Str::startsWith($item->product->image, 'http'))
-                                    <img src="{{ $item->product->image }}" class="img-fluid rounded shadow-sm cart-img-preview" alt="{{ $item->product->name }}">
-                                @else
-                                    <img src="{{ asset('storage/products/' . $item->product->image) }}" class="img-fluid rounded shadow-sm cart-img-preview" alt="{{ $item->product->name }}">
-                                @endif
+                                <img src="{{ $item->product->image_url }}" class="img-fluid rounded shadow-sm cart-img-preview" alt="{{ $item->product->name }}">
                             </div>
                             
                             {{-- Info --}}

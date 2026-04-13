@@ -563,16 +563,6 @@
             <a class="offcanvas-menu-item" href="{{ route('buyer.dashboard') }}">
                 <i class="bi bi-speedometer2"></i> Dashboard Buyer
             </a>
-            <a class="offcanvas-menu-item" href="{{ route('orders.index') }}">
-                <i class="bi bi-box"></i> Pesanan Saya
-            </a>
-            <a class="offcanvas-menu-item" href="{{ route('cart.index') }}">
-                <i class="bi bi-cart"></i> Keranjang Belanja
-            </a>
-            <hr class="my-3">
-            <a class="offcanvas-menu-item" href="{{ route('seller.request') }}">
-                <i class="bi bi-shop"></i> Jadi Seller
-            </a>
         @endif
 
         @if(Auth::user()->role == 'seller')
@@ -584,6 +574,23 @@
             </a>
             <a class="offcanvas-menu-item" href="{{ route('seller.orders') }}">
                 <i class="bi bi-cart-check"></i> Pesanan Masuk
+            </a>
+        @endif
+
+        {{-- Buyer Features (Available to both Buyers and Sellers) --}}
+        @if(Auth::user()->role == 'buyer' || Auth::user()->role == 'seller')
+            <hr class="my-3">
+            <a class="offcanvas-menu-item @if(request()->routeIs('orders.*')) active @endif" href="{{ route('orders.index') }}">
+                <i class="bi bi-bag-check"></i> Pesanan Saya
+            </a>
+            <a class="offcanvas-menu-item @if(request()->routeIs('cart.*')) active @endif" href="{{ route('cart.index') }}">
+                <i class="bi bi-cart"></i> Keranjang Belanja
+            </a>
+        @endif
+
+        @if(Auth::user()->role == 'buyer')
+            <a class="offcanvas-menu-item" href="{{ route('seller.request') }}">
+                <i class="bi bi-shop"></i> Jadi Seller
             </a>
         @endif
 

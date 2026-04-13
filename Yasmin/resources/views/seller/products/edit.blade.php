@@ -65,7 +65,7 @@
                         <div class="mb-3">
                             <label class="form-label">Foto Produk Saat Ini</label>
                             <div>
-                                <img src="{{ asset('storage/products/' . $product->image) }}" 
+                                <img src="{{ $product->image_url }}" 
                                      width="100" height="100" style="object-fit: cover;">
                             </div>
                         </div>

@@ -374,7 +374,7 @@
                     <tr>
                         <td>
                             <div class="product-cell">
-                                <img src="{{ asset('storage/products/' . $item->product->image) }}"
+                                <img src="{{ $item->product->image_url }}"
                                      class="product-thumb" alt="{{ $item->product->name }}">
                                 <div>
                                     <div class="product-cell-name">{{ $item->product->name }}</div>
@@ -404,7 +404,7 @@
                 @foreach($order->items as $item)
                     <div class="order-prod-card">
                         <div class="order-prod-info">
-                            <img src="{{ asset('storage/products/' . $item->product->image) }}"
+                            <img src="{{ $item->product->image_url }}"
                                  class="product-thumb" alt="{{ $item->product->name }}">
                             <div style="flex:1">
                                 <div class="product-cell-name">{{ $item->product->name }}</div>

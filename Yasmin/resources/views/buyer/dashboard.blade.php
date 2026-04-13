@@ -492,11 +492,7 @@
                 <div class="col-lg-3 col-md-4 col-6">
                     <div class="card-product">
                         <div class="position-relative overflow-hidden">
-                            @if(Str::startsWith($product->image, 'http'))
-                                <img src="{{ $product->image }}" class="card-img-top" alt="{{ $product->name }}">
-                            @else
-                                <img src="{{ asset('storage/products/' . $product->image) }}" class="card-img-top" alt="{{ $product->name }}">
-                            @endif
+                                <img src="{{ $product->image_url }}" class="card-img-top" alt="{{ $product->name }}">
                             <span class="badge-condition">
                                 {{ $product->condition == 'baru' ? 'Baru' : ($product->condition == 'seperti_baru' ? 'Spt Baru' : 'Bekas') }}
                             </span>
