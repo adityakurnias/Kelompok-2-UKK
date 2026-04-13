@@ -18,11 +18,18 @@ class Product extends Model
     // ── ACCESSOR: otomatis fallback ke default jika file tidak ada ──
     public function getImageUrlAttribute(): string
     {
+        // Jika gambar adalah URL eksternal (Unsplash, dll)
+        if (str_starts_with($this->image, 'http')) {
+            return $this->image;
+        }
+
+        // Jika gambar ada di storage lokal
         if ($this->image && Storage::disk('public')->exists('products/' . $this->image)) {
             return asset('storage/products/' . $this->image);
         }
 
-        return asset('storage/products/default-product.jpg');
+        // Fallback default
+        return asset('images/default-product.jpg');
     }
 
     // ── RELATIONS ──

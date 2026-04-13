@@ -155,7 +155,14 @@
     .recent-order-item:hover {
         border-color: var(--navy);
         background: #fbfbfb;
-        transform: translateX(4px);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    
+    .recent-order-link {
+        text-decoration: none !important;
+        color: inherit !important;
+        display: block;
     }
     
     .order-number {
@@ -327,42 +334,44 @@
                 
                 @if($recentOrders->count() > 0)
                     @foreach($recentOrders as $order)
-                    <div class="recent-order-item">
-                        <div class="row align-items-center">
-                            <div class="col-md-3">
-                                <small class="text-muted">No. Order</small>
-                                <div class="order-number">{{ $order->order_number }}</div>
-                            </div>
-                            <div class="col-md-2">
-                                <small class="text-muted">Tanggal</small>
-                                <div>{{ $order->created_at->format('d/m/Y') }}</div>
-                            </div>
-                            <div class="col-md-2">
-                                <small class="text-muted">Total</small>
-                                <div class="fw-bold text-navy">Rp {{ number_format($order->total_price, 0, ',', '.') }}</div>
-                            </div>
-                            <div class="col-md-2">
-                                <small class="text-muted">Status</small>
-                                <div>
-                                    @php
-                                        $statusClass = [
-                                            'pending' => 'warning',
-                                            'confirmed' => 'info',
-                                            'shipped' => 'primary',
-                                            'completed' => 'success',
-                                            'cancelled' => 'danger'
-                                        ][$order->status] ?? 'secondary';
-                                    @endphp
-                                    <span class="badge bg-{{ $statusClass }}">{{ ucfirst($order->status) }}</span>
+                        <a href="{{ route('orders.show', $order->id) }}" class="recent-order-link">
+                            <div class="recent-order-item">
+                                <div class="row align-items-center">
+                                    <div class="col-6 col-md-3">
+                                        <small class="text-muted d-block">No. Order</small>
+                                        <div class="order-number text-truncate">{{ $order->order_number }}</div>
+                                    </div>
+                                    <div class="col-6 col-md-2">
+                                        <small class="text-muted d-block">Tanggal</small>
+                                        <div class="small">{{ $order->created_at->format('d/m/Y') }}</div>
+                                    </div>
+                                    <div class="col-6 col-md-2 mt-2 mt-md-0">
+                                        <small class="text-muted d-block">Total</small>
+                                        <div class="fw-bold text-navy small">Rp {{ number_format($order->total_price, 0, ',', '.') }}</div>
+                                    </div>
+                                    <div class="col-6 col-md-2 mt-2 mt-md-0">
+                                        <small class="text-muted d-block">Status</small>
+                                        <div>
+                                            @php
+                                                $statusClass = [
+                                                    'pending' => 'warning',
+                                                    'confirmed' => 'info',
+                                                    'shipped' => 'primary',
+                                                    'completed' => 'success',
+                                                    'cancelled' => 'danger'
+                                                ][$order->status] ?? 'secondary';
+                                            @endphp
+                                            <span class="badge bg-{{ $statusClass }}" style="font-size: 0.7rem;">{{ ucfirst($order->status) }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3 text-end mt-2 mt-md-0 d-none d-md-block">
+                                        <span class="btn btn-sm btn-outline-navy" style="position: relative; z-index: 5;">
+                                            <i class="bi bi-eye"></i> Detail
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 text-end">
-                                <a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm btn-outline-navy">
-                                    <i class="bi bi-eye"></i> Detail
-                                </a>
-                            </div>
-                        </div>
-                    </div>
+                        </a>
                     @endforeach
                 @else
                     <div class="empty-state">

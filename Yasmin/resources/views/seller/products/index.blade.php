@@ -125,7 +125,7 @@
     }
 
     /* ── TABLE ── */
-    .prod-table { width: 100%; border-collapse: collapse; }
+    .prod-table { width: 100%; border-collapse: collapse; min-width: 800px; }
 
     .prod-table thead th {
         background: var(--soft);
@@ -161,26 +161,29 @@
     .prod-table tbody td:last-child  { padding-right: 1.5rem; }
 
     /* Product cell */
-    .product-cell { display: flex; align-items: center; gap: 0.85rem; }
+    .product-cell { 
+        display: flex; 
+        align-items: center; 
+        gap: 1rem; 
+        min-width: 250px;
+    }
 
     .product-thumb {
-        width: 52px;
-        height: 52px;
-        border-radius: 11px;
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
         object-fit: cover;
-        border: 1.5px solid var(--border);
+        border: 1px solid var(--border);
         flex-shrink: 0;
         background: var(--soft);
+        color: transparent; /* Hide ALT text if image breaks to avoid overlapping */
     }
 
     .product-name {
-        font-weight: 600;
+        font-weight: 700;
         color: var(--navy);
-        font-size: 0.875rem;
-        max-width: 200px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        font-size: 0.9rem;
+        line-height: 1.3;
     }
 
     /* Condition badge */

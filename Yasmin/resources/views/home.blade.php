@@ -330,6 +330,18 @@
         .hero-cta { justify-content: center; }
         .hero-stats { justify-content: center; gap: 1.5rem; }
         .hero-image-wrap { margin-top: 3rem; }
+        @media (max-width: 768px) {
+            .card-product img { height: 160px; }
+        }
+
+        .card-product .card-body {
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-product:hover img {
+            transform: scale(1.08);
+        }
     }
 
     @media (max-width: 768px) {
@@ -531,15 +543,15 @@
                                 <i class="bi bi-person-circle me-1"></i>{{ $product->user->name }}
                             </span>
                         </div>
-                        <div class="d-flex gap-2">
+                        <div class="d-flex flex-column flex-sm-row gap-2" style="position: relative; z-index: 10;">
                             <form action="{{ route('cart.add', $product->id) }}" method="POST" class="flex-grow-1">
                                 @csrf
-                                <button type="submit" class="btn-navy w-100" style="font-size:0.75rem;padding:0.4rem;border-radius:6px;">
+                                <button type="submit" class="btn-navy w-100" style="font-size:0.7rem;padding:0.45rem 0.2rem;border-radius:6px; cursor: pointer; position: relative; z-index: 11;">
                                     <i class="bi bi-cart-plus"></i> +Keranjang
                                 </button>
                             </form>
-                            <a href="{{ route('products.show', $product) }}" class="btn-outline-navy" 
-                               style="font-size:0.75rem;padding:0.4rem 0.7rem;border-radius:6px;text-decoration:none;border:1px solid var(--navy);display:flex;align-items:center;justify-content:center;">
+                            <a href="{{ route('products.show', $product) }}" class="btn-outline-navy flex-grow-1" 
+                               style="font-size:0.75rem;padding:0.45rem 0.2rem;border-radius:6px;text-decoration:none;border:1px solid var(--navy);display:flex;align-items:center;justify-content:center; cursor: pointer; position: relative; z-index: 11;">
                                 Detail
                             </a>
                         </div>

@@ -114,14 +114,17 @@
                                     <i class="bi bi-person-circle"></i> {{ $product->user->name }}
                                 </span>
                             </div>
-                            <div class="d-flex gap-2">
+                            <div class="d-flex flex-column flex-sm-row gap-2 mt-auto" style="position: relative; z-index: 10;">
                                 <form action="{{ route('cart.add', $product->id) }}" method="POST" class="flex-grow-1">
                                     @csrf
-                                    <button type="submit" class="btn-navy btn-sm w-100" style="font-size: 0.75rem;">
+                                    <button type="submit" class="btn-navy w-100" style="font-size:0.7rem;padding:0.45rem 0.2rem;border-radius:6px; cursor: pointer; position: relative; z-index: 11;">
                                         <i class="bi bi-cart-plus"></i> +Keranjang
                                     </button>
                                 </form>
-                                <a href="{{ route('products.show', $product) }}" class="btn btn-outline-navy btn-sm" style="font-size: 0.75rem;">Detail</a>
+                                <a href="{{ route('products.show', $product) }}" class="btn-outline-navy flex-grow-1" 
+                                   style="font-size:0.75rem;padding:0.45rem 0.2rem;border-radius:6px;text-decoration:none;border:1px solid var(--navy);display:flex;align-items:center;justify-content:center; cursor: pointer; position: relative; z-index: 11;">
+                                    Detail
+                                </a>
                             </div>
                         </div>
                     </div>
