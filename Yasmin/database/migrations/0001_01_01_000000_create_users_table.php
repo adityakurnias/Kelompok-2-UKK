@@ -17,6 +17,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('phone', 20)->nullable();
+            $table->text('address')->nullable();
+            $table->string('photo')->nullable();
+            $table->enum('role', ['admin', 'buyer', 'seller'])->default('buyer');
+            $table->boolean('is_blocked')->default(false);
+            $table->text('block_reason')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

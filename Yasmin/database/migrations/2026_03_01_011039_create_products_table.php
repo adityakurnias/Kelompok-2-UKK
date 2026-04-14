@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('price', 12, 2);
             $table->enum('condition', ['baru', 'seperti_baru', 'bekas']);
-            $table->enum('status', ['tersedia', 'terjual'])->default('tersedia');
+            $table->enum('status', ['pending', 'tersedia', 'terjual', 'ditolak'])->default('pending');
             $table->string('image');
             $table->timestamps();
         });

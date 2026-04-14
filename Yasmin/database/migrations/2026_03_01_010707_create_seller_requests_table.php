@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('shop_name');
             $table->text('shop_description');
             $table->text('shop_address');
-            $table->string('ktp_image');
+            $table->string('ktp_image')->nullable();
             $table->string('whatsapp_number', 20);
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->text('admin_note')->nullable();
