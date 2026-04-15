@@ -153,7 +153,7 @@
                                     <div class="text-navy fw-bold">{{ $item->product->name }}</div>
                                 </td>
                                 <td class="text-center">
-                                    <span class="badge bg-light text-navy">{{ $item->quantity }}</span>
+                                    <span class="badge bg-navy text-white fw-bold px-3 py-2">{{ $item->quantity }}</span>
                                 </td>
                                 <td>
                                     <span class="fw-bold">Rp {{ number_format($item->subtotal, 0, ',', '.') }}</span>
@@ -176,6 +176,9 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-end gap-2">
+                                        <a href="{{ route('seller.orders.show', $item->id) }}" class="btn btn-outline-navy btn-action-sm">
+                                            <i class="bi bi-eye"></i> Detail
+                                        </a>
                                         @if($item->order->status == 'pending')
                                             <form action="{{ route('seller.orders.confirm', $item->order) }}" method="POST">
                                                 @csrf

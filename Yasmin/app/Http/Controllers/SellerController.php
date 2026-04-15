@@ -178,6 +178,18 @@ class SellerController extends Controller
         return view('seller.orders.index', compact('orderItems'));
     }
 
+    public function showOrder(OrderItem $orderItem)
+    {
+        // Pastikan order item milik seller yang login
+        if ($orderItem->seller_id != Auth::id()) {
+            abort(403);
+        }
+
+        $orderItem->load(['order.buyer', 'product']);
+
+        return view('seller.orders.show', compact('orderItem'));
+    }
+
     public function confirmOrder(Order $order)
     {
         $order->update(['status' => 'confirmed']);

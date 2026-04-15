@@ -160,6 +160,7 @@ Route::middleware(['auth', 'checkRole:seller'])
         */
         Route::prefix('orders')->name('orders.')->group(function () {
             Route::get('/', [SellerController::class, 'orders'])->name('index');
+            Route::get('/{orderItem}', [SellerController::class, 'showOrder'])->name('show');
             Route::put('/{order}/confirm', [SellerController::class, 'confirmOrder'])->name('confirm');
             Route::put('/{order}/ship', [SellerController::class, 'shipOrder'])->name('ship');
         });

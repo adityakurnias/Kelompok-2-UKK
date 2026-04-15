@@ -265,7 +265,7 @@
                             </div>
                         </div>
                         <div class="col-12 col-md-3 text-md-end mt-3 mt-md-0">
-                            <a href="{{ route('seller.orders') }}" class="btn btn-sm btn-outline-navy w-100 w-md-auto">Detail</a>
+                            <a href="{{ route('seller.orders.show', $item->id) }}" class="btn btn-sm btn-outline-navy w-100 w-md-auto">Detail</a>
                         </div>
                     </div>
                 </div>
