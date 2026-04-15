@@ -24,7 +24,13 @@ class ProductController extends Controller
         return view('products.index', compact('products', 'categories'));
     }
 
-        public function create()
+    public function show(Product $product)
+    {
+        $product->load('categories');
+        return view('products.show', compact('product'));
+    }
+
+    public function create()
     {
         $categories = \App\Models\Category::all(); // Ambil semua dari database
         return view('products.create', compact('categories'));
@@ -34,6 +40,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
             'image' => 'required|image|max:2048',
@@ -42,6 +49,7 @@ class ProductController extends Controller
 
         $product = new Product();
         $product->name = $request->name;
+        $product->description = $request->description;
         $product->price = $request->price;
         $product->stock = $request->stock;
 
@@ -69,6 +77,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
             'image' => 'nullable|image|max:2048',
@@ -76,6 +85,7 @@ class ProductController extends Controller
         ]);
 
         $product->name = $request->name;
+        $product->description = $request->description;
         $product->price = $request->price;
         $product->stock = $request->stock;
 

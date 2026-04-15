@@ -175,6 +175,11 @@
                             <input type="text" name="name" class="form-control" placeholder="Contoh: Sofa Minimalis Velvet" value="{{ old('name') }}" required>
                         </div>
 
+                        <div class="mb-4">
+                            <label class="form-label">Deskripsi Koleksi</label>
+                            <textarea name="description" class="form-control" rows="4" placeholder="Deskripsi detail produk...">{{ old('description') }}</textarea>
+                        </div>
+
                         <div class="row mb-4">
                             <div class="col-md-6 mb-3 mb-md-0">
                                 <label class="form-label">Harga Satuan (Rp)</label>

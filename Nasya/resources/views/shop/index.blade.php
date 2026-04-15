@@ -117,7 +117,9 @@
                                     </div>
 
                                     <div class="p-6">
-                                        <h3 class="font-serif text-xl text-[#433422] mb-2">{{ $product->name }}</h3>
+                                        <h3 class="font-serif text-xl text-[#433422] mb-2 hover:text-[#78350f] transition-colors">
+                                            <a href="{{ route('products.show', $product->id) }}">{{ $product->name }}</a>
+                                        </h3>
                                         <p class="text-[#a16207] font-bold text-lg mb-4">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
 
                                         <div class="flex items-center justify-between pt-4 border-t border-[#f3ede4]">

@@ -17,6 +17,11 @@
                         <input type="text" name="name" value="{{ old('name', $product->name) }}" class="w-full border-2 border-[#eaddcf] rounded-2xl p-3 outline-none" required>
                     </div>
 
+                    <div class="mb-6">
+                        <label class="block text-sm font-bold text-[#a16207] mb-2">DESKRIPSI</label>
+                        <textarea name="description" rows="4" class="w-full border-2 border-[#eaddcf] rounded-2xl p-3 outline-none">{{ old('description', $product->description) }}</textarea>
+                    </div>
+
                     <div class="grid grid-cols-2 gap-6 mb-6">
                         <div>
                             <label class="block text-sm font-bold text-[#a16207] mb-2">HARGA (RP)</label>

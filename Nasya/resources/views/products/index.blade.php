@@ -125,8 +125,8 @@
 
                                 {{-- Info Produk --}}
                                 <div class="px-2 pb-2">
-                                    <h3 class="text-[#433422] font-bold text-lg mb-1 capitalize" style="font-family: 'Playfair Display', serif;">
-                                        {{ $product->name }}
+                                    <h3 class="text-[#433422] font-bold text-lg mb-1 capitalize hover:text-[#78350f] transition-colors" style="font-family: 'Playfair Display', serif;">
+                                        <a href="{{ route('products.show', $product->id) }}">{{ $product->name }}</a>
                                     </h3>
                                     <p class="text-[#78350f] font-black text-lg mb-3">
                                         Rp{{ number_format($product->price, 0, ',', '.') }}
