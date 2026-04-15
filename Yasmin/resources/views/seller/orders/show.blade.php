@@ -137,7 +137,7 @@
                         <div class="info-section">
                             <h4 class="info-title"><i class="bi bi-box-seam"></i> Produk yang Dipesan</h4>
                             <div class="product-box">
-                                <img src="{{ asset('storage/products/' . $orderItem->product->image) }}" alt="{{ $orderItem->product->name }}" class="product-img">
+                                <img src="{{ $orderItem->product->image_url }}" alt="{{ $orderItem->product->name }}" class="product-img">
                                 <div>
                                     <h5 class="fw-bold mb-1">{{ $orderItem->product->name }}</h5>
                                     <p class="text-muted small mb-2">Harga Satuan: Rp {{ number_format($orderItem->price, 0, ',', '.') }}</p>
@@ -193,7 +193,7 @@
                                 <label class="info-label">Bukti Pembayaran</label>
                                 @if($orderItem->order->payment_proof)
                                 <div class="payment-proof-box">
-                                    <img src="{{ asset('storage/payments/' . $orderItem->order->payment_proof) }}" 
+                                    <img src="{{ $orderItem->order->payment_proof_url }}" 
                                          alt="Bukti Pembayaran" class="payment-proof-img"
                                          data-bs-toggle="modal" data-bs-target="#imageModal">
                                     <p class="mt-2 mb-0 small text-muted"><i class="bi bi-zoom-in"></i> Klik untuk memperbesar</p>
@@ -244,7 +244,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 bg-transparent">
             <div class="modal-body p-0 text-center">
-                <img src="{{ asset('storage/payments/' . $orderItem->order->payment_proof) }}" class="img-fluid rounded shadow">
+                <img src="{{ $orderItem->order->payment_proof_url }}" class="img-fluid rounded shadow">
                 <button type="button" class="btn btn-light mt-3 px-4 rounded-pill" data-bs-dismiss="modal">Tutup</button>
             </div>
         </div>
